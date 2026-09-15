@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0d0b0a;       /* fundo — preto quente, fuligem de forno a lenha */
+  --char: #1a1613;      /* camada acima do fundo — cartões, seams */
+  --paper: #f6f1e6;     /* branco quente — farinha, não branco puro */
+  --smoke: #b8afa1;     /* texto secundário sobre o fundo escuro */
+  --rosso: #c03233;     /* vermelho — molho, identidade da marca */
+  --oro: #e5b34d;       /* amarelo — usado com moderação, só detalhe */
+  --line: rgba(246, 241, 230, 0.14);
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-char: var(--char);
+  --color-paper: var(--paper);
+  --color-smoke: var(--smoke);
+  --color-rosso: var(--rosso);
+  --color-oro: var(--oro);
+  --color-line: var(--line);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display), ui-serif, serif;
+}
+
+/* Textura de quadriculado old school — fina, usada em faixas estreitas, nunca em fundos inteiros */
+.checker {
+  background-image:
+    linear-gradient(45deg, var(--rosso) 25%, transparent 25%, transparent 75%, var(--rosso) 75%),
+    linear-gradient(45deg, var(--rosso) 25%, transparent 25%, transparent 75%, var(--rosso) 75%);
+  background-size: 14px 14px;
+  background-position: 0 0, 7px 7px;
+  background-color: var(--paper);
+}
+
+.hairline {
+  box-shadow: 0 1px 0 0 var(--line);
+}
