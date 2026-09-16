@@ -9,7 +9,7 @@ export function ProvaSocial() {
   return (
     <section id="depoimentos" className="px-6 py-4 md:px-12">
       <div className="mx-auto max-w-6xl">
-        <h2 className="font-display text-4xl text-paper md:text-6xl">Quem já passou pelo forno</h2>
+        <h2 className="font-display text-4xl text-paper md:text-6xl">Quem já aprendeu com o&nbsp;Vecchio</h2>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {formados.map((f) => (

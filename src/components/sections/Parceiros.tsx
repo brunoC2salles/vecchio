@@ -14,7 +14,7 @@ export function Parceiros() {
   return (
     <section id="parceiros" className="px-6 py-4 md:px-12">
       <div className="mx-auto max-w-6xl">
-        <h2 className="font-display text-4xl text-paper md:text-6xl">Parceiros que apoiam o curso</h2>
+        <h2 className="font-display text-4xl text-paper md:text-6xl">Parceiros que apoiam o&nbsp;curso</h2>
 
         <div className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-10">
           {comLogo.map((p) => (

@@ -19,7 +19,7 @@ export function SeamDivider({ icon, label }: SeamDividerProps) {
   return (
     <div className="relative flex items-center justify-center py-10 md:py-14" aria-hidden={label ? undefined : true}>
       <motion.div
-        className="bg-line h-px w-full max-w-5xl origin-left"
+        className="checker h-[6px] w-full max-w-5xl origin-left"
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true, margin: "-10% 0px -10% 0px" }}

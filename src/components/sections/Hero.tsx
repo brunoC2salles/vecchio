@@ -29,7 +29,7 @@ export function Hero() {
         <MobileMenu />
       </nav>
 
-      <div className="relative mx-auto mt-14 grid max-w-6xl gap-10 md:mt-20 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <div className="relative mx-auto mt-14 grid max-w-6xl gap-10 md:mt-20 md:grid-cols-[1fr_1.15fr] md:items-center">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -46,7 +46,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.1, ease }}
             className="font-display mt-3 text-4xl leading-[1.05] text-paper md:text-6xl"
           >
-            Bora colocar a mão na massa?
+            Bora colocar a mão na&nbsp;massa?
           </motion.h1>
 
           <motion.p
@@ -57,7 +57,7 @@ export function Hero() {
           >
             Aprenda o método verace da pizza napoletana com quem vive isso todos os
             dias — da massa ao forno a lenha, ao lado do chef pizzaiolo certificado
-            AVPN da Vecchio.
+            AVPN da&nbsp;Vecchio.
           </motion.p>
 
           <motion.div
@@ -74,15 +74,14 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, delay: 0.15, ease }}
-          className="relative mx-auto aspect-[4/3] w-full max-w-xl md:max-w-2xl"
+          className="relative mx-auto aspect-[4/3] w-full max-w-2xl md:max-w-none"
         >
-          <div className="checker absolute -right-4 -top-4 h-24 w-24 -rotate-6 rounded-sm md:h-32 md:w-32" />
           <Image
             src="/img/galeria/hero-logo.png"
             alt="Vecchio School"
             fill
             priority
-            className="relative object-contain"
+            className="object-contain"
           />
         </motion.div>
       </div>

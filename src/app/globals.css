@@ -51,6 +51,14 @@ body {
   }
 }
 
+/* Nunca deixar uma palavra sozinha na última linha de um título ou parágrafo */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
 .font-display {
   font-family: var(--font-display), ui-serif, serif;
 }

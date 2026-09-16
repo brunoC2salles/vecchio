@@ -35,7 +35,7 @@ export function Metodologia() {
   return (
     <section id="metodologia" className="px-6 py-4 md:px-12">
       <div className="mx-auto max-w-6xl">
-        <h2 className="font-display text-4xl text-paper md:text-6xl">O que você vai aprender</h2>
+        <h2 className="font-display text-4xl text-paper md:text-6xl">O que você vai&nbsp;aprender</h2>
 
         <div className="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2">
           {modulos.map((m, i) => (
