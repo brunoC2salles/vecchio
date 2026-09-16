@@ -49,7 +49,7 @@ export function Metodologia() {
           ))}
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 flex justify-center">
           <CTAButton href="#investimento">Quero aprender com o Vecchio</CTAButton>
         </div>
       </div>

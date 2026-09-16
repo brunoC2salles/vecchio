@@ -8,8 +8,8 @@ const pepperoni = localFont({
   display: "swap",
 });
 
-const lazyDog = localFont({
-  src: "../fonts/LazyDog.ttf",
+const bodyFont = localFont({
+  src: "../fonts/LibreBaskerville.ttf",
   variable: "--font-body",
   display: "swap",
 });
@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${pepperoni.variable} ${lazyDog.variable}`}>
+      <body className={`${pepperoni.variable} ${bodyFont.variable}`}>
         {children}
       </body>
     </html>

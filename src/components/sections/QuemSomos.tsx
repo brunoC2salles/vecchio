@@ -1,11 +1,18 @@
+import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
-import { WheatDoodle } from "@/components/Doodle";
 
 export function QuemSomos() {
   return (
     <section id="quem-somos" className="px-6 py-4 md:px-12">
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[0.7fr_1.3fr] md:items-center">
-        <WheatDoodle className="text-oro mx-auto h-40 w-24 md:h-56 md:w-32" />
+      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+        <div className="border-line relative aspect-[4/5] overflow-hidden rounded-sm border">
+          <Image
+            src="/img/galeria/quem-somos.jpg"
+            alt="Chef pizzaiolo da Vecchio Napoletana preparando uma pizza"
+            fill
+            className="object-cover"
+          />
+        </div>
 
         <div>
           <h2 className="font-display text-4xl text-paper md:text-6xl">Quem somos</h2>

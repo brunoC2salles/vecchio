@@ -1,23 +1,35 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { CTAButton } from "@/components/CTAButton";
-import { FlameDoodle } from "@/components/Doodle";
+import { MobileMenu } from "@/components/MobileMenu";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   return (
-    <header className="relative overflow-hidden px-6 pb-16 pt-10 md:px-12 md:pb-24 md:pt-14">
+    <header className="relative overflow-hidden px-6 pb-16 pt-8 md:px-12 md:pb-24 md:pt-10">
       <nav className="mx-auto flex max-w-6xl items-center justify-between">
         <Image src="/img/logo.png" alt="Vecchio School" width={96} height={96} className="h-14 w-auto md:h-16" />
-        <CTAButton href="#investimento" variant="outline" className="px-5 py-2 text-sm md:text-base">
-          Quero minha vaga
-        </CTAButton>
+
+        <div className="hidden items-center gap-4 md:flex">
+          <Link
+            href="/login"
+            className="font-display border-paper text-paper rounded-sm border-2 px-6 py-2.5 text-base tracking-wide transition-transform duration-200 hover:-translate-y-0.5"
+          >
+            Comunidade
+          </Link>
+          <CTAButton href="#investimento" className="px-6 py-2.5 text-base">
+            Quero minha vaga
+          </CTAButton>
+        </div>
+
+        <MobileMenu />
       </nav>
 
-      <div className="relative mx-auto mt-16 grid max-w-6xl gap-10 md:mt-24 md:grid-cols-[1.2fr_0.8fr] md:items-center">
+      <div className="relative mx-auto mt-14 grid max-w-6xl gap-10 md:mt-20 md:grid-cols-[1.1fr_0.9fr] md:items-center">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -32,9 +44,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease }}
-            className="font-display mt-3 text-[2.6rem] leading-[1.05] text-paper md:text-7xl"
+            className="font-display mt-3 text-4xl leading-[1.05] text-paper md:text-6xl"
           >
-            Bene jovens, bora aprender o segredo da vera pizza napoletana com o Vecchio?
+            A vera pizza napoletana, do jeito certo.
           </motion.h1>
 
           <motion.p
@@ -58,12 +70,26 @@ export function Hero() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.85, rotate: -6 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.9, delay: 0.2, ease }}
-          className="text-rosso mx-auto"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.15, ease }}
+          className="relative mx-auto aspect-square w-full max-w-md"
         >
-          <FlameDoodle className="h-56 w-40 md:h-72 md:w-52" />
+          <div
+            className="absolute inset-0"
+            style={{
+              maskImage: "radial-gradient(ellipse 62% 62% at center, black 50%, transparent 100%)",
+              WebkitMaskImage: "radial-gradient(ellipse 62% 62% at center, black 50%, transparent 100%)",
+            }}
+          >
+            <Image
+              src="/img/galeria/hero-pizza.jpg"
+              alt="Pizza Margherita da Vecchio Napoletana"
+              fill
+              priority
+              className="object-cover"
+            />
+          </div>
         </motion.div>
       </div>
     </header>

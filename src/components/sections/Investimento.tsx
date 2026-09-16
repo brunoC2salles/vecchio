@@ -16,9 +16,14 @@ export function Investimento() {
       <div className="border-line bg-char mx-auto max-w-4xl rounded-sm border p-8 md:p-14">
         <h2 className="font-display text-4xl text-paper md:text-5xl">Investimento</h2>
 
-        <div className="mt-6 flex flex-wrap items-baseline gap-3">
-          <span className="font-display text-oro text-5xl md:text-6xl">$800</span>
-          <span className="text-smoke text-lg">à vista, ou em até 3x de $299</span>
+        <div className="mt-6">
+          <div className="flex flex-wrap items-baseline gap-3">
+            <span className="font-display text-oro text-5xl md:text-6xl">R$849</span>
+            <span className="text-smoke text-lg">à vista no Pix</span>
+          </div>
+          <p className="text-smoke mt-2 text-base">
+            ou no cartão por R$897, em até 3x de R$299
+          </p>
         </div>
 
         <ul className="mt-10 space-y-4">

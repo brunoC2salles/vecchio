@@ -26,7 +26,7 @@ const perguntas = [
   },
   {
     q: "Como funciona o pagamento?",
-    a: "À vista por $800 ou parcelado em até 3x de $299.",
+    a: "À vista por R$849 no Pix, ou no cartão por R$897, em até 3x de R$299.",
   },
   {
     q: "O aprendizado acaba no fim do curso?",
@@ -64,8 +64,13 @@ export function FAQ() {
           })}
         </div>
 
-        <div className="mt-10">
-          <CTAButton href="#contato" variant="outline">
+        <div className="mt-10 flex justify-center">
+          <CTAButton
+            href="https://wa.me/5555999211984?text=Bene%20Vecchios%2C%20quero%20saber%20mais%20sobre%20o%20curso!"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outline"
+          >
             Ainda com dúvidas? Fale com a gente
           </CTAButton>
         </div>
