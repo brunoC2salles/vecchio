@@ -29,7 +29,7 @@ export function Hero() {
         <MobileMenu />
       </nav>
 
-      <div className="relative mx-auto grid max-w-6xl gap-6 md:grid-cols-[1fr_1.2fr] md:items-center">
+      <div className="relative mx-auto grid max-w-6xl gap-6 md:grid-cols-[1fr_1.2fr] md:items-stretch">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -74,8 +74,19 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, delay: 0.15, ease }}
-          className="relative mx-auto aspect-[4/3] w-full max-w-2xl md:ml-auto md:mr-0"
+          className="relative hidden h-full items-center justify-end md:flex"
         >
+          <Image
+            src="/img/galeria/hero-logo.png"
+            alt="Vecchio School"
+            width={800}
+            height={600}
+            priority
+            className="h-full w-auto object-contain"
+          />
+        </motion.div>
+
+        <div className="relative aspect-[4/3] w-full md:hidden">
           <Image
             src="/img/galeria/hero-logo.png"
             alt="Vecchio School"
@@ -83,7 +94,7 @@ export function Hero() {
             priority
             className="object-contain"
           />
-        </motion.div>
+        </div>
       </div>
     </header>
   );
