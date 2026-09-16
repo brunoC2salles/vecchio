@@ -10,8 +10,8 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   return (
-    <header className="relative overflow-hidden px-6 pb-16 pt-8 md:px-12 md:pb-24 md:pt-10">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between">
+    <header className="relative overflow-hidden px-6 pb-16 pt-24 md:px-12 md:pb-24 md:pt-28">
+      <nav className="absolute inset-x-0 top-0 z-10 mx-auto flex max-w-6xl items-center justify-between bg-transparent px-6 py-6 md:px-12 md:py-8">
         <Image src="/img/logo.png" alt="Vecchio School" width={96} height={96} className="h-14 w-auto md:h-16" />
 
         <div className="hidden items-center gap-4 md:flex">
@@ -29,7 +29,7 @@ export function Hero() {
         <MobileMenu />
       </nav>
 
-      <div className="relative mx-auto mt-8 grid max-w-6xl gap-6 md:mt-10 md:grid-cols-[1fr_1.2fr] md:items-center">
+      <div className="relative mx-auto grid max-w-6xl gap-6 md:grid-cols-[1fr_1.2fr] md:items-center">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -74,7 +74,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, delay: 0.15, ease }}
-          className="relative mx-auto aspect-[4/3] w-full max-w-[1631px] md:ml-auto md:mr-0"
+          className="relative mx-auto aspect-[4/3] w-full max-w-2xl md:ml-auto md:mr-0"
         >
           <Image
             src="/img/galeria/hero-logo.png"
