@@ -29,13 +29,13 @@ export function Hero() {
         <MobileMenu />
       </nav>
 
-      <div className="relative mx-auto mt-14 grid max-w-6xl gap-10 md:mt-20 md:grid-cols-[1fr_1.15fr] md:items-center">
+      <div className="relative mx-auto mt-14 grid max-w-6xl gap-6 md:mt-20 md:grid-cols-[0.85fr_1.35fr] md:items-center">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease }}
-            className="text-smoke text-lg"
+            className="text-smoke text-lg md:text-xl"
           >
             L&apos;arte della pizza napoletana
           </motion.p>
@@ -44,7 +44,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease }}
-            className="font-display mt-3 text-4xl leading-[1.05] text-paper md:text-6xl"
+            className="font-display mt-3 text-4xl leading-[1.05] text-paper md:text-7xl"
           >
             Bora colocar a mão na&nbsp;massa?
           </motion.h1>
@@ -53,7 +53,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.22, ease }}
-            className="text-smoke mt-6 max-w-md text-lg leading-relaxed"
+            className="text-smoke mt-6 max-w-md text-lg leading-relaxed md:text-xl"
           >
             Aprenda o método verace da pizza napoletana com quem vive isso todos os
             dias — da massa ao forno a lenha, ao lado do chef pizzaiolo certificado
@@ -74,7 +74,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, delay: 0.15, ease }}
-          className="relative mx-auto aspect-[4/3] w-full max-w-2xl md:max-w-none"
+          className="relative mx-auto aspect-[4/3] w-full max-w-3xl"
         >
           <Image
             src="/img/galeria/hero-logo.png"

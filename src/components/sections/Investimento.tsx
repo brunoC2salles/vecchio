@@ -36,7 +36,7 @@ export function Investimento() {
           ))}
         </ul>
 
-        <div className="mt-10">
+        <div className="mt-10 flex justify-center">
           <CTAButton href="/matricula">Garantir minha vaga</CTAButton>
         </div>
       </div>
