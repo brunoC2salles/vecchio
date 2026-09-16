@@ -23,7 +23,7 @@ export function Footer() {
             </p>
           </div>
 
-          <CTAButton href="#investimento">Garantir minha vaga</CTAButton>
+          <CTAButton href="/matricula">Garantir minha vaga</CTAButton>
         </div>
       </div>
     </footer>

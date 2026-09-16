@@ -46,7 +46,7 @@ export function Curso() {
         </div>
 
         <div className="mt-10">
-          <CTAButton href="#investimento">Garantir minha vaga</CTAButton>
+          <CTAButton href="/matricula">Garantir minha vaga</CTAButton>
         </div>
       </div>
     </section>

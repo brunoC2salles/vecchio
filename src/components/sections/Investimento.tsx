@@ -31,7 +31,7 @@ export function Investimento() {
         </ul>
 
         <div className="mt-10">
-          <CTAButton href="#contato">Garantir minha vaga</CTAButton>
+          <CTAButton href="/matricula">Garantir minha vaga</CTAButton>
         </div>
       </div>
     </section>
