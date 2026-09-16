@@ -74,7 +74,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, delay: 0.15, ease }}
-          className="relative mx-auto aspect-[4/3] w-full max-w-[1165px] md:ml-auto md:mr-0"
+          className="relative mx-auto aspect-[4/3] w-full max-w-[1631px] md:ml-auto md:mr-0"
         >
           <Image
             src="/img/galeria/hero-logo.png"
