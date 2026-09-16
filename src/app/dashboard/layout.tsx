@@ -47,6 +47,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
             Comunidade
           </Link>
           <Link
+            href="/dashboard/receitas"
+            className="text-paper hover:bg-ink rounded-sm px-3 py-2.5 text-sm transition-colors"
+          >
+            Receitas
+          </Link>
+          <Link
             href="/dashboard/perfil"
             className="text-paper hover:bg-ink rounded-sm px-3 py-2.5 text-sm transition-colors"
           >
