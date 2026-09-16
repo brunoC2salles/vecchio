@@ -34,11 +34,14 @@ export default async function DashboardLayout({ children }: { children: React.Re
           >
             Início
           </Link>
+          <Link
+            href="/dashboard/cmv"
+            className="text-paper hover:bg-ink rounded-sm px-3 py-2.5 text-sm transition-colors"
+          >
+            Calculadora de CMV
+          </Link>
           <span className="text-smoke cursor-not-allowed rounded-sm px-3 py-2.5 text-sm">
             Comunidade — em breve
-          </span>
-          <span className="text-smoke cursor-not-allowed rounded-sm px-3 py-2.5 text-sm">
-            Calculadora de CMV — em breve
           </span>
           {profile?.role === "admin" && (
             <span className="text-smoke cursor-not-allowed rounded-sm px-3 py-2.5 text-sm">
