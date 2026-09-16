@@ -82,7 +82,7 @@ export function Hero() {
             width={800}
             height={600}
             priority
-            className="h-full w-auto object-contain"
+            className="h-full w-auto scale-[1.3] object-contain"
           />
         </motion.div>
 
