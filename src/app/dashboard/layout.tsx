@@ -46,10 +46,19 @@ export default async function DashboardLayout({ children }: { children: React.Re
           >
             Comunidade
           </Link>
+          <Link
+            href="/dashboard/perfil"
+            className="text-paper hover:bg-ink rounded-sm px-3 py-2.5 text-sm transition-colors"
+          >
+            Meu perfil
+          </Link>
           {profile?.role === "admin" && (
-            <span className="text-smoke cursor-not-allowed rounded-sm px-3 py-2.5 text-sm">
-              Administração — em breve
-            </span>
+            <Link
+              href="/dashboard/admin"
+              className="text-paper hover:bg-ink rounded-sm px-3 py-2.5 text-sm transition-colors"
+            >
+              Administração
+            </Link>
           )}
         </nav>
 
