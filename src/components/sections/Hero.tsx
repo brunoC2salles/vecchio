@@ -46,7 +46,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.1, ease }}
             className="font-display mt-3 text-4xl leading-[1.05] text-paper md:text-6xl"
           >
-            A vera pizza napoletana, do jeito certo.
+            Bora colocar a mão na massa?
           </motion.h1>
 
           <motion.p
@@ -55,8 +55,9 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.22, ease }}
             className="text-smoke mt-6 max-w-md text-lg leading-relaxed"
           >
-            Dois dias de imersão teórica e prática no método italiano da Verace Pizza
-            Napoletana, conduzidos por um chef pizzaiolo certificado AVPN.
+            Aprenda o método verace da pizza napoletana com quem vive isso todos os
+            dias — da massa ao forno a lenha, ao lado do chef pizzaiolo certificado
+            AVPN da Vecchio.
           </motion.p>
 
           <motion.div
@@ -70,26 +71,19 @@ export function Hero() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1, delay: 0.15, ease }}
-          className="relative mx-auto aspect-square w-full max-w-md"
+          className="relative mx-auto aspect-[4/3] w-full max-w-xl md:max-w-2xl"
         >
-          <div
-            className="absolute inset-0"
-            style={{
-              maskImage: "radial-gradient(ellipse 62% 62% at center, black 50%, transparent 100%)",
-              WebkitMaskImage: "radial-gradient(ellipse 62% 62% at center, black 50%, transparent 100%)",
-            }}
-          >
-            <Image
-              src="/img/galeria/hero-pizza.jpg"
-              alt="Pizza Margherita da Vecchio Napoletana"
-              fill
-              priority
-              className="object-cover"
-            />
-          </div>
+          <div className="checker absolute -right-4 -top-4 h-24 w-24 -rotate-6 rounded-sm md:h-32 md:w-32" />
+          <Image
+            src="/img/galeria/hero-logo.png"
+            alt="Vecchio School"
+            fill
+            priority
+            className="relative object-contain"
+          />
         </motion.div>
       </div>
     </header>

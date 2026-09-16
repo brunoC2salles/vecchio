@@ -15,7 +15,6 @@ const iconClass = "h-9 w-9 md:h-11 md:w-11";
 export default function Home() {
   return (
     <main>
-      <div className="checker h-[6px] w-full" />
       <Hero />
       <SeamDivider icon={<WheatDoodle className={iconClass} />} label="Sobre a Vecchio Napoletana" />
       <Curso />

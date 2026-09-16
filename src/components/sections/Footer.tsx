@@ -4,7 +4,6 @@ import { CTAButton } from "@/components/CTAButton";
 export function Footer() {
   return (
     <footer id="contato" className="px-6 pb-8 pt-6 md:px-12">
-      <div className="checker mx-auto mb-8 h-[6px] max-w-6xl" />
 
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 text-center md:grid-cols-3 md:text-left">

@@ -13,7 +13,8 @@ const inclusos = [
 export function Investimento() {
   return (
     <section id="investimento" className="px-6 py-4 md:px-12">
-      <div className="border-line bg-char mx-auto max-w-4xl rounded-sm border p-8 md:p-14">
+      <div className="border-line bg-char relative mx-auto max-w-4xl overflow-hidden rounded-sm border p-8 md:p-14">
+        <div className="checker absolute -right-6 -top-6 h-20 w-20 rotate-12 rounded-sm opacity-90" />
         <h2 className="font-display text-4xl text-paper md:text-5xl">Investimento</h2>
 
         <div className="mt-6">

@@ -37,9 +37,9 @@ export function Metodologia() {
       <div className="mx-auto max-w-6xl">
         <h2 className="font-display text-4xl text-paper md:text-6xl">O que você vai aprender</h2>
 
-        <div className="mt-10 grid gap-px md:grid-cols-2">
+        <div className="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2">
           {modulos.map((m, i) => (
-            <div key={m.titulo} className="border-line border-t py-7 pr-6 md:border-r md:py-9">
+            <div key={m.titulo}>
               <div className="flex items-baseline gap-4">
                 <span className="font-display text-oro text-2xl">{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="font-display text-paper text-xl md:text-2xl">{m.titulo}</h3>

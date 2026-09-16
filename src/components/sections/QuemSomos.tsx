@@ -5,13 +5,16 @@ export function QuemSomos() {
   return (
     <section id="quem-somos" className="px-6 py-4 md:px-12">
       <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-        <div className="border-line relative aspect-[4/5] overflow-hidden rounded-sm border">
-          <Image
-            src="/img/galeria/quem-somos.jpg"
-            alt="Chef pizzaiolo da Vecchio Napoletana preparando uma pizza"
-            fill
-            className="object-cover"
-          />
+        <div className="relative">
+          <div className="checker absolute -bottom-4 -left-4 h-20 w-20 rotate-6 rounded-sm" />
+          <div className="border-line bg-char relative aspect-[4/5] overflow-hidden rounded-sm border">
+            <Image
+              src="/img/galeria/quem-somos.jpg"
+              alt="Chef pizzaiolo da Vecchio Napoletana preparando uma pizza"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
 
         <div>

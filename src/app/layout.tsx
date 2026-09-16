@@ -9,7 +9,7 @@ const pepperoni = localFont({
 });
 
 const bodyFont = localFont({
-  src: "../fonts/LibreBaskerville.ttf",
+  src: "../fonts/Bitter.ttf",
   variable: "--font-body",
   display: "swap",
 });
