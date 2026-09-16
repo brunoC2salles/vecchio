@@ -23,17 +23,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="flex min-h-screen">
       <aside className="border-line bg-char flex w-64 flex-shrink-0 flex-col border-r px-6 py-8">
-        <Link href="/dashboard" className="block">
+        <Link href="/dashboard/comunidade/feed" className="block">
           <Image src="/img/logo.png" alt="Vecchio School" width={64} height={64} className="h-10 w-auto" />
         </Link>
 
         <nav className="mt-10 flex flex-1 flex-col gap-1">
-          <Link
-            href="/dashboard"
-            className="text-paper hover:bg-ink rounded-sm px-3 py-2.5 text-sm transition-colors"
-          >
-            Início
-          </Link>
           <Link
             href="/dashboard/cmv"
             className="text-paper hover:bg-ink rounded-sm px-3 py-2.5 text-sm transition-colors"
