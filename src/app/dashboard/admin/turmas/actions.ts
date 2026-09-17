@@ -31,3 +31,16 @@ export async function updateMatriculaStatus(id: string, formData: FormData) {
   await supabase.from("matriculas").update({ status }).eq("id", id);
   revalidatePath("/dashboard/admin/turmas");
 }
+
+export async function updateTurmaLinksAsaas(id: string, formData: FormData) {
+  const supabase = await createClient();
+  const pix = String(formData.get("asaas_payment_link_id_pix") ?? "").trim() || null;
+  const cartao = String(formData.get("asaas_payment_link_id_cartao") ?? "").trim() || null;
+
+  await supabase
+    .from("turmas")
+    .update({ asaas_payment_link_id_pix: pix, asaas_payment_link_id_cartao: cartao })
+    .eq("id", id);
+
+  revalidatePath("/dashboard/admin/turmas");
+}

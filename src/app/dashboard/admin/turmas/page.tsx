@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { createTurma, updateMatriculaStatus, updateTurmaStatus } from "./actions";
+import { listAsaasPaymentLinks } from "@/lib/asaas";
+import { createTurma, updateMatriculaStatus, updateTurmaStatus, updateTurmaLinksAsaas } from "./actions";
 
 function formatarData(iso: string | null) {
   if (!iso) return "sem data";
@@ -12,9 +13,17 @@ export default async function TurmasPage() {
   const { data: turmas } = await supabase
     .from("turmas")
     .select(
-      "id, nome, tipo, data_evento, status, matriculas ( id, status, codigo_acesso_presencial, comprado_em, profile:profiles ( nome, email ) )"
+      "id, nome, tipo, data_evento, status, asaas_payment_link_id_pix, asaas_payment_link_id_cartao, matriculas ( id, status, codigo_acesso_presencial, comprado_em, profile:profiles ( nome, email ) )"
     )
     .order("criado_em", { ascending: false });
+
+  let linksAsaas: Awaited<ReturnType<typeof listAsaasPaymentLinks>> = [];
+  let erroLinksAsaas: string | null = null;
+  try {
+    linksAsaas = await listAsaasPaymentLinks();
+  } catch (e) {
+    erroLinksAsaas = (e as Error).message;
+  }
 
   return (
     <div className="space-y-8">
@@ -68,6 +77,47 @@ export default async function TurmasPage() {
               <p className="text-smoke text-xs">Nenhuma matrícula nesta turma ainda.</p>
             )}
           </div>
+
+          <form
+            action={updateTurmaLinksAsaas.bind(null, turma.id)}
+            className="border-line mt-4 space-y-2 rounded-sm border p-3"
+          >
+            <p className="text-smoke text-xs">
+              Links de pagamento Asaas (define qual link libera acesso nesta turma)
+            </p>
+            {erroLinksAsaas && (
+              <p className="text-xs text-rosso">Não foi possível carregar os links do Asaas: {erroLinksAsaas}</p>
+            )}
+            <div className="grid grid-cols-2 gap-3">
+              <select
+                name="asaas_payment_link_id_pix"
+                defaultValue={turma.asaas_payment_link_id_pix ?? ""}
+                className="border-line bg-ink text-paper w-full rounded-sm border px-3 py-2 text-sm outline-none focus:border-rosso"
+              >
+                <option value="">— link do Pix —</option>
+                {linksAsaas.map((l) => (
+                  <option key={l.id} value={l.id}>
+                    {l.name} ({l.url.replace("https://www.asaas.com/c/", "")})
+                  </option>
+                ))}
+              </select>
+              <select
+                name="asaas_payment_link_id_cartao"
+                defaultValue={turma.asaas_payment_link_id_cartao ?? ""}
+                className="border-line bg-ink text-paper w-full rounded-sm border px-3 py-2 text-sm outline-none focus:border-rosso"
+              >
+                <option value="">— link do Cartão —</option>
+                {linksAsaas.map((l) => (
+                  <option key={l.id} value={l.id}>
+                    {l.name} ({l.url.replace("https://www.asaas.com/c/", "")})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button type="submit" className="text-oro text-xs underline underline-offset-2">
+              salvar links
+            </button>
+          </form>
         </div>
       ))}
 

@@ -4,10 +4,7 @@ import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
 import { compraConfirmadaEmail } from "@/lib/email-templates";
-
-function gerarCodigoAcesso() {
-  return Math.random().toString(36).slice(2, 10).toUpperCase();
-}
+import { gerarCodigoAcesso } from "@/lib/codigo-acesso";
 
 export async function matricular(formData: FormData) {
   const nome = String(formData.get("nome") ?? "").trim();
