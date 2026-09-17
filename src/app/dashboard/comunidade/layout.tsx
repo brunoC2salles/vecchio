@@ -19,6 +19,7 @@ export default async function ComunidadeLayout({ children }: { children: React.R
     { href: "/dashboard/comunidade/feed", label: "Feed" },
     { href: "/dashboard/comunidade/espacos", label: "Espaços" },
     ...(podeVerSalaDeAula ? [{ href: "/dashboard/comunidade/aulas", label: "Sala de aula" }] : []),
+    ...(podeVerSalaDeAula ? [{ href: "/dashboard/comunidade/material-extra", label: "Material extra" }] : []),
     { href: "/dashboard/comunidade/eventos", label: "Eventos" },
     { href: "/dashboard/comunidade/patrocinadores", label: "Patrocinadores" },
   ];
@@ -33,7 +34,7 @@ export default async function ComunidadeLayout({ children }: { children: React.R
           </Link>
         ))}
       </nav>
-      <div className="mt-8 max-w-2xl">{children}</div>
+      <div className="mx-auto mt-8 max-w-2xl">{children}</div>
     </div>
   );
 }

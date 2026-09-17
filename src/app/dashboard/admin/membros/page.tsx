@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { updateMembro } from "./actions";
+import { updateMembro, excluirMembro } from "./actions";
+import { ConfirmButton } from "@/components/ConfirmButton";
 
 export default async function MembrosPage() {
   const supabase = await createClient();
@@ -48,9 +49,20 @@ export default async function MembrosPage() {
                     <input type="checkbox" name="is_patrocinador" form={formId} defaultChecked={m.is_patrocinador} />
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <button type="submit" form={formId} className="text-oro text-xs underline underline-offset-2">
-                      salvar
-                    </button>
+                    <div className="flex items-center justify-end gap-3">
+                      <button type="submit" form={formId} className="text-oro text-xs underline underline-offset-2">
+                        salvar
+                      </button>
+                      <form action={excluirMembro.bind(null, m.id)}>
+                        <ConfirmButton
+                          type="submit"
+                          confirmMessage={`Excluir ${m.nome} definitivamente? Isso apaga a conta, matrículas, posts e comentários. Não tem volta.`}
+                          className="text-rosso text-xs underline underline-offset-2"
+                        >
+                          excluir
+                        </ConfirmButton>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               );
@@ -67,8 +79,9 @@ export default async function MembrosPage() {
       </div>
 
       {/* Um <form> não pode ficar dentro de <tr>/<table> (HTML inválido faz o navegador
-          descartar o conteúdo). Por isso os forms ficam aqui fora, e os campos de cada
-          linha se ligam a eles pelo atributo form="...". */}
+          descartar o conteúdo). Por isso os forms de "salvar" ficam aqui fora, e os campos
+          de cada linha se ligam a eles pelo atributo form="...". O botão "excluir" já tem
+          seu próprio form (excluirMembro), que não precisa de campos extras. */}
       {(membros ?? []).map((m) => (
         <form key={m.id} id={`membro-form-${m.id}`} action={updateMembro.bind(null, m.id)} />
       ))}

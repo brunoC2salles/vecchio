@@ -32,6 +32,14 @@ export async function updateMatriculaStatus(id: string, formData: FormData) {
   revalidatePath("/dashboard/admin/turmas");
 }
 
+export async function excluirMatricula(id: string) {
+  // Remove só a matrícula (a conta do aluno continua existindo). Para excluir
+  // o aluno inteiro, use a página de Membros.
+  const supabase = await createClient();
+  await supabase.from("matriculas").delete().eq("id", id);
+  revalidatePath("/dashboard/admin/turmas");
+}
+
 export async function updateTurmaLinksAsaas(id: string, formData: FormData) {
   const supabase = await createClient();
   const pix = String(formData.get("asaas_payment_link_id_pix") ?? "").trim() || null;

@@ -1,6 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { listAsaasPaymentLinks } from "@/lib/asaas";
-import { createTurma, updateMatriculaStatus, updateTurmaStatus, updateTurmaLinksAsaas } from "./actions";
+import {
+  createTurma,
+  updateMatriculaStatus,
+  updateTurmaStatus,
+  updateTurmaLinksAsaas,
+  excluirMatricula,
+} from "./actions";
+import { ConfirmButton } from "@/components/ConfirmButton";
 
 function formatarData(iso: string | null) {
   if (!iso) return "sem data";
@@ -56,20 +63,31 @@ export default async function TurmasPage() {
                     <p className="text-oro text-xs">código: {m.codigo_acesso_presencial}</p>
                   )}
                 </div>
-                <form action={updateMatriculaStatus.bind(null, m.id)} className="flex items-center gap-2">
-                  <select
-                    name="status"
-                    defaultValue={m.status}
-                    className="border-line bg-ink text-paper rounded-sm border px-2 py-1 text-xs outline-none focus:border-rosso"
-                  >
-                    <option value="teste">Teste</option>
-                    <option value="pago">Pago</option>
-                    <option value="cancelado">Cancelado</option>
-                  </select>
-                  <button type="submit" className="text-oro text-xs underline underline-offset-2">
-                    salvar
-                  </button>
-                </form>
+                <div className="flex items-center gap-3">
+                  <form action={updateMatriculaStatus.bind(null, m.id)} className="flex items-center gap-2">
+                    <select
+                      name="status"
+                      defaultValue={m.status}
+                      className="border-line bg-ink text-paper rounded-sm border px-2 py-1 text-xs outline-none focus:border-rosso"
+                    >
+                      <option value="teste">Teste</option>
+                      <option value="pago">Pago</option>
+                      <option value="cancelado">Cancelado</option>
+                    </select>
+                    <button type="submit" className="text-oro text-xs underline underline-offset-2">
+                      salvar
+                    </button>
+                  </form>
+                  <form action={excluirMatricula.bind(null, m.id)}>
+                    <ConfirmButton
+                      type="submit"
+                      confirmMessage={`Remover a matrícula de ${perfilMatricula?.nome ?? "esse aluno"} nesta turma? A conta dele continua existindo.`}
+                      className="text-rosso text-xs underline underline-offset-2"
+                    >
+                      remover
+                    </ConfirmButton>
+                  </form>
+                </div>
               </div>
               );
             })}
