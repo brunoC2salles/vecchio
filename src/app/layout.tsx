@@ -2,12 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const pepperoni = localFont({
-  src: "../fonts/PepperoniPizza.ttf",
-  variable: "--font-display",
-  display: "swap",
-});
-
 const bodyFont = localFont({
   src: "../fonts/Bitter.ttf",
   variable: "--font-body",
@@ -27,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${pepperoni.variable} ${bodyFont.variable}`}>
+      <body className={`${bodyFont.variable}`}>
         {children}
       </body>
     </html>
