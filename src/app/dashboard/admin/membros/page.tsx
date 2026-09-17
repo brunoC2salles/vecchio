@@ -27,14 +27,16 @@ export default async function MembrosPage() {
             </tr>
           </thead>
           <tbody>
-            {(membros ?? []).map((m) => (
-              <tr key={m.id} className="border-line text-paper border-b last:border-0">
-                <form action={updateMembro.bind(null, m.id)} className="contents">
+            {(membros ?? []).map((m) => {
+              const formId = `membro-form-${m.id}`;
+              return (
+                <tr key={m.id} className="border-line text-paper border-b last:border-0">
                   <td className="px-4 py-3">{m.nome}</td>
                   <td className="text-smoke px-4 py-3">{m.email}</td>
                   <td className="px-4 py-3">
                     <select
                       name="role"
+                      form={formId}
                       defaultValue={m.role}
                       className="border-line bg-ink text-paper rounded-sm border px-2 py-1 text-xs outline-none focus:border-rosso"
                     >
@@ -43,16 +45,16 @@ export default async function MembrosPage() {
                     </select>
                   </td>
                   <td className="px-4 py-3">
-                    <input type="checkbox" name="is_patrocinador" defaultChecked={m.is_patrocinador} />
+                    <input type="checkbox" name="is_patrocinador" form={formId} defaultChecked={m.is_patrocinador} />
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <button type="submit" className="text-oro text-xs underline underline-offset-2">
+                    <button type="submit" form={formId} className="text-oro text-xs underline underline-offset-2">
                       salvar
                     </button>
                   </td>
-                </form>
-              </tr>
-            ))}
+                </tr>
+              );
+            })}
             {(membros ?? []).length === 0 && (
               <tr>
                 <td colSpan={5} className="text-smoke px-4 py-6 text-center">
@@ -63,6 +65,13 @@ export default async function MembrosPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Um <form> não pode ficar dentro de <tr>/<table> (HTML inválido faz o navegador
+          descartar o conteúdo). Por isso os forms ficam aqui fora, e os campos de cada
+          linha se ligam a eles pelo atributo form="...". */}
+      {(membros ?? []).map((m) => (
+        <form key={m.id} id={`membro-form-${m.id}`} action={updateMembro.bind(null, m.id)} />
+      ))}
     </div>
   );
 }

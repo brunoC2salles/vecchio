@@ -19,11 +19,11 @@ export function Investimento() {
 
         <div className="mt-6">
           <div className="flex flex-wrap items-baseline gap-3">
-            <span className="font-display text-oro text-5xl md:text-6xl">R$849</span>
+            <span className="font-display text-oro text-5xl md:text-6xl">R$847</span>
             <span className="text-smoke text-lg">à vista no Pix</span>
           </div>
           <p className="text-smoke mt-2 text-base">
-            ou no cartão por R$897, em até 3x de R$299
+            ou no cartão por R$987, em até 3x de R$329 sem juros
           </p>
         </div>
 
