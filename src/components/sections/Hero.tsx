@@ -1,14 +1,24 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { CTAButton } from "@/components/CTAButton";
 import { MobileMenu } from "@/components/MobileMenu";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
+  const heroImgRef = useRef<HTMLDivElement>(null);
+  // Progresso de 0 a 1 enquanto a imagem do mobile sai de vista pelo topo da tela
+  const { scrollYProgress } = useScroll({
+    target: heroImgRef,
+    offset: ["start start", "end start"],
+  });
+  const imgOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+
   return (
     <header className="relative overflow-hidden px-6 pb-16 pt-24 md:px-12 md:pb-24 md:pt-28">
       <nav className="absolute inset-x-0 top-0 z-10 mx-auto flex max-w-6xl items-center justify-between bg-transparent px-6 py-6 md:px-12 md:py-8">
@@ -30,6 +40,23 @@ export function Hero() {
       </nav>
 
       <div className="relative mx-auto grid max-w-6xl gap-6 md:grid-cols-[1fr_1.2fr] md:items-stretch">
+        {/* No mobile essa imagem vem primeiro no fluxo e some com parallax ao rolar.
+            No desktop ela nem entra no layout (display:none via md:hidden), quem
+            aparece é a versão de baixo. */}
+        <motion.div
+          ref={heroImgRef}
+          style={{ opacity: imgOpacity, y: imgY }}
+          className="relative aspect-[4/3] w-full md:hidden"
+        >
+          <Image
+            src="/img/galeria/hero-logo.png"
+            alt="Vecchio School"
+            fill
+            priority
+            className="object-contain"
+          />
+        </motion.div>
+
         <div>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -85,16 +112,6 @@ export function Hero() {
             className="h-full w-auto scale-[1.3] object-contain"
           />
         </motion.div>
-
-        <div className="relative aspect-[4/3] w-full md:hidden">
-          <Image
-            src="/img/galeria/hero-logo.png"
-            alt="Vecchio School"
-            fill
-            priority
-            className="object-contain"
-          />
-        </div>
       </div>
     </header>
   );

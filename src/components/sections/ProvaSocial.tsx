@@ -1,7 +1,12 @@
 import Image from "next/image";
 
 const formados = [
-  { nome: "João Paulo Vilaverde", foto: "/img/prova-social/joao-paulo.jpg" },
+  {
+    nome: "João Paulo Vilaverde",
+    foto: "/img/prova-social/joao-paulo.jpg",
+    depoimento:
+      "Fiz o workshop na primeira edição do curso, em 2022. Esse foi o meu primeiro contato com pizza Napoletana e acabei me apaixonando. Hoje, é uma das coisas que eu mais amo fazer, por isso, posso ser suspeito para falar sobre o workshop. Até porque trabalho na Vecchio e sou um dos pizzaiolos daqui da casa, já tem um ano e meio.",
+  },
   { nome: "Luciana Soares", foto: "/img/prova-social/luciana.jpg" },
 ];
 
@@ -19,7 +24,11 @@ export function ProvaSocial() {
               </div>
               <div className="p-6">
                 <p className="font-display text-paper text-lg">{f.nome}</p>
-                <p className="text-smoke mt-2 text-sm italic">Depoimento a caminho — aguardando texto do aluno.</p>
+                {f.depoimento ? (
+                  <p className="text-smoke mt-2 text-sm italic leading-relaxed">“{f.depoimento}”</p>
+                ) : (
+                  <p className="text-smoke mt-2 text-sm italic">Depoimento a caminho — aguardando texto do aluno.</p>
+                )}
               </div>
             </div>
           ))}
