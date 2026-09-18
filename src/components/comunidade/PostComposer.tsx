@@ -3,17 +3,18 @@
 import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { createPost } from "./actions";
+import { TOPICOS } from "./topicos";
 
 type PostComposerProps = {
-  espacoId: string | null;
   voltarPara: string;
   error?: string;
 };
 
-export function PostComposer({ espacoId, voltarPara, error }: PostComposerProps) {
+export function PostComposer({ voltarPara, error }: PostComposerProps) {
   const [midiaUrl, setMidiaUrl] = useState<string | null>(null);
   const [enviandoImagem, setEnviandoImagem] = useState(false);
   const [erroUpload, setErroUpload] = useState<string | null>(null);
+  const [topicosSelecionados, setTopicosSelecionados] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
@@ -48,6 +49,10 @@ export function PostComposer({ espacoId, voltarPara, error }: PostComposerProps)
     setEnviandoImagem(false);
   }
 
+  function alternarTopico(valor: string) {
+    setTopicosSelecionados((atual) => (atual.includes(valor) ? atual.filter((v) => v !== valor) : [...atual, valor]));
+  }
+
   return (
     <form
       ref={formRef}
@@ -55,15 +60,18 @@ export function PostComposer({ espacoId, voltarPara, error }: PostComposerProps)
         await createPost(formData);
         formRef.current?.reset();
         setMidiaUrl(null);
+        setTopicosSelecionados([]);
       }}
       className="border-line bg-char rounded-sm border p-4"
     >
       {error && <p className="border-rosso text-rosso mb-3 rounded-sm border px-4 py-3 text-sm">{error}</p>}
       {erroUpload && <p className="border-rosso text-rosso mb-3 rounded-sm border px-4 py-3 text-sm">{erroUpload}</p>}
 
-      <input type="hidden" name="espaco_id" value={espacoId ?? ""} />
       <input type="hidden" name="voltar_para" value={voltarPara} />
       <input type="hidden" name="midia_url" value={midiaUrl ?? ""} />
+      {topicosSelecionados.map((t) => (
+        <input key={t} type="hidden" name="topicos" value={t} />
+      ))}
 
       <textarea
         name="conteudo"
@@ -78,6 +86,27 @@ export function PostComposer({ espacoId, voltarPara, error }: PostComposerProps)
         <img src={midiaUrl} alt="Prévia da imagem" className="mt-3 max-h-56 rounded-sm object-cover" />
       )}
 
+      <div className="mt-3">
+        <p className="text-smoke text-xs">Sobre qual tópico você está falando?</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {TOPICOS.map((t) => {
+            const ativo = topicosSelecionados.includes(t.valor);
+            return (
+              <button
+                key={t.valor}
+                type="button"
+                onClick={() => alternarTopico(t.valor)}
+                className={`rounded-full px-3 py-1 text-xs font-semibold tracking-wide transition-colors ${
+                  ativo ? "bg-rosso text-paper" : "border-rosso text-rosso border"
+                }`}
+              >
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="mt-3 flex items-center justify-between">
         <label className="text-smoke hover:text-paper cursor-pointer text-sm underline underline-offset-2">
           {enviandoImagem ? "Enviando..." : midiaUrl ? "Trocar imagem" : "Adicionar imagem"}
@@ -86,7 +115,7 @@ export function PostComposer({ espacoId, voltarPara, error }: PostComposerProps)
 
         <button
           type="submit"
-          disabled={enviandoImagem}
+          disabled={enviandoImagem || topicosSelecionados.length === 0}
           className="font-display bg-rosso text-paper rounded-sm px-5 py-2 text-sm tracking-wide disabled:opacity-50"
         >
           Publicar

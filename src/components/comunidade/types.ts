@@ -17,6 +17,7 @@ export type Post = {
   conteudo: string;
   midia_url: string | null;
   criado_em: string;
+  topicos: string[];
   author: Autor | null;
   curtidas: { author_id: string }[];
   comentarios: Comentario[];

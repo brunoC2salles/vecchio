@@ -70,16 +70,6 @@ function IconRetrair(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-function IconEspacos(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
-      <rect x="13" y="3.5" width="7.5" height="7.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
-      <rect x="3.5" y="13" width="7.5" height="7.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
-      <rect x="13" y="13" width="7.5" height="7.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
-    </svg>
-  );
-}
 function IconAulas(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
@@ -124,7 +114,6 @@ export function Sidebar({ nome, role, isPatrocinador, isAdmin }: SidebarProps) {
   const podeVerSalaDeAula = !isPatrocinador || isAdmin;
 
   const comunidadeSubLinks = [
-    { href: "/dashboard/comunidade/espacos", label: "Espaços", Icon: IconEspacos },
     ...(podeVerSalaDeAula ? [{ href: "/dashboard/comunidade/aulas", label: "Sala de aula", Icon: IconAulas }] : []),
     ...(podeVerSalaDeAula
       ? [{ href: "/dashboard/comunidade/material-extra", label: "Material extra", Icon: IconMaterial }]

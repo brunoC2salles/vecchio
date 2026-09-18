@@ -1,5 +1,6 @@
 import type { Post } from "./types";
 import { addComment, deletePost, toggleLike } from "./actions";
+import { labelDoTopico } from "./topicos";
 
 type PostCardProps = {
   post: Post;
@@ -40,6 +41,16 @@ export function PostCard({ post, currentUserId, isAdmin, voltarPara }: PostCardP
         )}
       </div>
 
+      {post.topicos.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {post.topicos.map((t) => (
+            <span key={t} className="border-rosso text-rosso rounded-full border px-2 py-0.5 text-xs">
+              {labelDoTopico(t)}
+            </span>
+          ))}
+        </div>
+      )}
+
       <p className="text-paper mt-3 whitespace-pre-wrap text-sm leading-relaxed">{post.conteudo}</p>
 
       {post.midia_url && (
@@ -53,7 +64,9 @@ export function PostCard({ post, currentUserId, isAdmin, voltarPara }: PostCardP
             ♥ {post.curtidas.length}
           </button>
         </form>
-        <span className="text-smoke text-sm">{post.comentarios.length} comentário{post.comentarios.length === 1 ? "" : "s"}</span>
+        <span className="text-smoke text-sm">
+          {post.comentarios.length} comentário{post.comentarios.length === 1 ? "" : "s"}
+        </span>
       </div>
 
       {post.comentarios.length > 0 && (

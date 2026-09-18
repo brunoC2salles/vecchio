@@ -13,18 +13,22 @@ export async function createPost(formData: FormData) {
 
   const conteudo = String(formData.get("conteudo") ?? "").trim();
   const midiaUrl = String(formData.get("midia_url") ?? "") || null;
-  const espacoId = String(formData.get("espaco_id") ?? "") || null;
+  const topicos = formData.getAll("topicos").map(String);
   const voltarPara = String(formData.get("voltar_para") ?? "/dashboard/comunidade/feed");
 
   if (!conteudo) {
     redirect(voltarPara + "?error=" + encodeURIComponent("Escreva algo antes de publicar."));
   }
 
+  if (topicos.length === 0) {
+    redirect(voltarPara + "?error=" + encodeURIComponent("Escolha pelo menos um tópico."));
+  }
+
   const { error } = await supabase.from("posts").insert({
     author_id: user.id,
     conteudo,
     midia_url: midiaUrl,
-    espaco_id: espacoId,
+    topicos,
   });
 
   if (error) {

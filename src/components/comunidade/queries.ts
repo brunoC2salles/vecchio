@@ -1,15 +1,12 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Post } from "./types";
 
-export async function fetchPosts(
-  supabase: SupabaseClient,
-  espacoId: string | null
-): Promise<Post[]> {
+export async function fetchPosts(supabase: SupabaseClient, topico?: string | null): Promise<Post[]> {
   let query = supabase
     .from("posts")
     .select(
       `
-      id, conteudo, midia_url, criado_em,
+      id, conteudo, midia_url, criado_em, topicos,
       author:profiles!posts_author_id_fkey ( id, nome, avatar_url, is_patrocinador ),
       curtidas ( author_id ),
       comentarios ( id, conteudo, criado_em, author:profiles!comentarios_author_id_fkey ( id, nome, avatar_url, is_patrocinador ) )
@@ -17,7 +14,9 @@ export async function fetchPosts(
     )
     .order("criado_em", { ascending: false });
 
-  query = espacoId === null ? query.is("espaco_id", null) : query.eq("espaco_id", espacoId);
+  if (topico) {
+    query = query.contains("topicos", [topico]);
+  }
 
   const { data, error } = await query;
   if (error) {
