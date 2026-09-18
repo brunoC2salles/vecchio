@@ -1,4 +1,5 @@
 import { CTAButton } from "@/components/CTAButton";
+import { KitUniformeBadge } from "@/components/KitUniformeBadge";
 
 const inclusos = [
   "Aula com chef pizzaiolo verace",
@@ -31,7 +32,10 @@ export function Investimento() {
           {inclusos.map((item) => (
             <li key={item} className="text-paper flex items-start gap-3 text-lg leading-snug">
               <span className="bg-rosso mt-2.5 h-2 w-2 flex-shrink-0 rounded-full" />
-              {item}
+              <span className="flex flex-wrap items-center">
+                {item}
+                {item.startsWith("Kit de uniforme") && <KitUniformeBadge />}
+              </span>
             </li>
           ))}
         </ul>

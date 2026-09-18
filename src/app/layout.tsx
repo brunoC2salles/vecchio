@@ -8,6 +8,13 @@ const bodyFont = localFont({
   display: "swap",
 });
 
+const displayFont = localFont({
+  src: "../fonts/Bogart-Bold.woff2",
+  variable: "--font-display",
+  weight: "700",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Vecchio School — L'arte della pizza napoletana",
   description:
@@ -21,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${bodyFont.variable}`}>
+      <body className={`${bodyFont.variable} ${displayFont.variable}`}>
         {children}
       </body>
     </html>

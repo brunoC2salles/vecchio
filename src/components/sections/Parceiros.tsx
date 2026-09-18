@@ -6,9 +6,10 @@ const comLogo = [
   { nome: "Sauce & Co.", logo: "/img/partners/sauce.png", link: "https://www.instagram.com/sauce.and.co/" },
   { nome: "FornoSanto", logo: "/img/partners/fornosanto.png", link: "https://www.instagram.com/fornosanto/" },
   { nome: "LAB Confecções", logo: "/img/partners/lab.png", link: "https://www.instagram.com/labconfeccoes/" },
+  { nome: "Bonfiore Latteria", logo: "/img/partners/bonfiore.png", link: "" }, // TODO: colocar o link do Instagram/site da Bonfiore
 ];
 
-const pendentes = ["Ctrade", "Ciao", "Bonfiore Latteria"];
+const pendentes = ["Ctrade", "Ciao"];
 
 export function Parceiros() {
   return (
