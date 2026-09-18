@@ -16,16 +16,11 @@ export default async function LoginPage({
           <Image src="/img/logo.png" alt="Vecchio School" width={80} height={80} className="h-16 w-auto" />
         </div>
 
-        <h1 className="font-display text-paper mt-8 text-center text-3xl">Entrar</h1>
-        <p className="text-smoke mt-2 text-center text-sm">
-          Acesse com o e-mail e a senha da sua conta Vecchio School.
-        </p>
-
         {error && (
-          <p className="border-rosso text-rosso mt-6 rounded-sm border px-4 py-3 text-sm">{error}</p>
+          <p className="border-rosso text-rosso mt-8 rounded-sm border px-4 py-3 text-sm">{error}</p>
         )}
 
-        <form action={login} className="mt-8 space-y-4">
+        <form action={login} className="mt-10 space-y-4">
           <input type="hidden" name="next" value={next} />
           <div>
             <label htmlFor="email" className="text-smoke text-sm">

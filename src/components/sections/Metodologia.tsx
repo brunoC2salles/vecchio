@@ -37,14 +37,14 @@ export function Metodologia() {
       <div className="mx-auto max-w-6xl">
         <h2 className="font-display text-4xl text-paper md:text-6xl">O que você vai&nbsp;aprender</h2>
 
-        <div className="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2">
-          {modulos.map((m, i) => (
-            <div key={m.titulo}>
-              <div className="flex items-baseline gap-4">
-                <span className="font-display text-oro text-2xl">{String(i + 1).padStart(2, "0")}</span>
+        <div className="mt-10 max-w-3xl space-y-8">
+          {modulos.map((m) => (
+            <div key={m.titulo} className="flex items-start gap-4">
+              <span className="bg-rosso mt-3 h-3 w-3 flex-shrink-0 rounded-full" />
+              <div>
                 <h3 className="font-display text-paper text-xl md:text-2xl">{m.titulo}</h3>
+                <p className="text-smoke mt-2 max-w-md text-base leading-relaxed">{m.texto}</p>
               </div>
-              <p className="text-smoke mt-3 max-w-md text-base leading-relaxed">{m.texto}</p>
             </div>
           ))}
         </div>

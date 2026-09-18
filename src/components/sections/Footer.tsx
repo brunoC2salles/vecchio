@@ -9,7 +9,9 @@ export function Footer() {
         <div className="grid gap-8 text-center md:grid-cols-3 md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <Image src="/img/logo.png" alt="Vecchio School" width={56} height={56} className="h-12 w-auto" />
-            <p className="font-display text-paper mt-3 text-lg">Vecchio Napoletana</p>
+            <p className="text-smoke mt-3 text-xs">
+              CNPJ 41.449.090/0001-80 &middot; Inscri&ccedil;&atilde;o Estadual 109/0411526
+            </p>
           </div>
 
           <address className="text-smoke text-sm not-italic leading-relaxed">
@@ -29,10 +31,6 @@ export function Footer() {
             <p className="text-smoke text-xs">contato@vecchioschool.com.br</p>
           </div>
         </div>
-
-        <p className="text-smoke mt-8 text-center text-xs">
-          CNPJ 41.449.090/0001-80 &middot; Inscri&ccedil;&atilde;o Estadual 109/0411526
-        </p>
       </div>
     </footer>
   );
