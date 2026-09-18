@@ -31,22 +31,40 @@ const modulos = [
   },
 ];
 
+// Divide em duas colunas independentes (3 itens cada) em vez de pares lado a lado —
+// assim a altura de um item não depende do item ao lado, evitando desalinhamento.
+const colunaEsquerda = modulos.slice(0, 3);
+const colunaDireita = modulos.slice(3);
+
+function Modulo({ titulo, texto }: { titulo: string; texto: string }) {
+  return (
+    <div className="flex items-start gap-4">
+      <span className="bg-rosso mt-3 h-3 w-3 flex-shrink-0 rounded-full" />
+      <div>
+        <h3 className="font-display text-paper text-xl md:text-2xl">{titulo}</h3>
+        <p className="text-smoke mt-2 max-w-md text-base leading-relaxed">{texto}</p>
+      </div>
+    </div>
+  );
+}
+
 export function Metodologia() {
   return (
     <section id="metodologia" className="px-6 py-4 md:px-12">
       <div className="mx-auto max-w-6xl">
         <h2 className="font-display text-4xl text-paper md:text-6xl">O que você vai&nbsp;aprender</h2>
 
-        <div className="mt-10 max-w-3xl space-y-8">
-          {modulos.map((m) => (
-            <div key={m.titulo} className="flex items-start gap-4">
-              <span className="bg-rosso mt-3 h-3 w-3 flex-shrink-0 rounded-full" />
-              <div>
-                <h3 className="font-display text-paper text-xl md:text-2xl">{m.titulo}</h3>
-                <p className="text-smoke mt-2 max-w-md text-base leading-relaxed">{m.texto}</p>
-              </div>
-            </div>
-          ))}
+        <div className="mt-10 grid gap-x-10 gap-y-8 md:grid-cols-2">
+          <div className="space-y-8">
+            {colunaEsquerda.map((m) => (
+              <Modulo key={m.titulo} {...m} />
+            ))}
+          </div>
+          <div className="space-y-8">
+            {colunaDireita.map((m) => (
+              <Modulo key={m.titulo} {...m} />
+            ))}
+          </div>
         </div>
 
         <div className="mt-10 flex justify-center">

@@ -58,20 +58,11 @@ export function Hero() {
         </motion.div>
 
         <div>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
-            className="text-smoke text-lg md:text-xl"
-          >
-            L&apos;arte della pizza napoletana
-          </motion.p>
-
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease }}
-            className="font-display mt-3 text-4xl leading-[1.05] text-paper md:text-7xl"
+            transition={{ duration: 0.7, ease }}
+            className="font-display text-4xl leading-[1.05] text-paper md:text-7xl"
           >
             A escola Vecchio de fazer la Vera&nbsp;Pizza
           </motion.h1>
@@ -79,7 +70,7 @@ export function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.22, ease }}
+            transition={{ duration: 0.7, delay: 0.12, ease }}
             className="text-smoke mt-6 max-w-md text-lg leading-relaxed md:text-xl"
           >
             Aprenda o método verace da pizza napoletana com quem vive isso todos os
@@ -90,7 +81,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.34, ease }}
+            transition={{ duration: 0.7, delay: 0.24, ease }}
             className="mt-9"
           >
             <CTAButton href="#investimento">Quero minha vaga</CTAButton>

@@ -70,16 +70,68 @@ function IconRetrair(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+function IconEspacos(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="13" y="3.5" width="7.5" height="7.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="3.5" y="13" width="7.5" height="7.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="13" y="13" width="7.5" height="7.5" rx="1" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
+  );
+}
+function IconAulas(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M10 8.5l6 3.5-6 3.5v-7z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  );
+}
+function IconMaterial(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path d="M6.5 3.5h8l4 4v13a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M14 3.5v4h4" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M8.5 13h7M8.5 16.5h7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+function IconEventos(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <rect x="3.5" y="5" width="17" height="15" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M3.5 9.5h17M8 3v3.5M16 3v3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+function IconPatrocinadores(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path d="M12 5.5c-1.5-2-5-2-6.5.5-1.5 2.5 0 5 1 6L12 17l5.5-5c1-1 2.5-3.5 1-6-1.5-2.5-5-2.5-6.5-.5z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
-const links = [
-  { href: "/dashboard/cmv", label: "Calculadora de CMV", Icon: IconCMV },
-  { href: "/dashboard/comunidade", label: "Comunidade", Icon: IconComunidade },
-  { href: "/dashboard/receitas", label: "Receitas", Icon: IconReceitas },
-  { href: "/dashboard/perfil", label: "Meu perfil", Icon: IconPerfil },
-];
+const links = [{ href: "/dashboard/cmv", label: "Calculadora de CMV", Icon: IconCMV }];
+
+const comunidadeLink = { href: "/dashboard/comunidade/feed", label: "Comunidade", Icon: IconComunidade };
+
+const outrosLinks = [{ href: "/dashboard/receitas", label: "Receitas", Icon: IconReceitas }];
 
 export function Sidebar({ nome, role, isPatrocinador, isAdmin }: SidebarProps) {
-  const [aberto, setAberto] = useState(true);
+  const [aberto, setAberto] = useState(false);
+  const podeVerSalaDeAula = !isPatrocinador || isAdmin;
+
+  const comunidadeSubLinks = [
+    { href: "/dashboard/comunidade/espacos", label: "Espaços", Icon: IconEspacos },
+    ...(podeVerSalaDeAula ? [{ href: "/dashboard/comunidade/aulas", label: "Sala de aula", Icon: IconAulas }] : []),
+    ...(podeVerSalaDeAula
+      ? [{ href: "/dashboard/comunidade/material-extra", label: "Material extra", Icon: IconMaterial }]
+      : []),
+    { href: "/dashboard/comunidade/eventos", label: "Eventos", Icon: IconEventos },
+    { href: "/dashboard/comunidade/patrocinadores", label: "Patrocinadores", Icon: IconPatrocinadores },
+  ];
 
   return (
     <aside
@@ -101,7 +153,7 @@ export function Sidebar({ nome, role, isPatrocinador, isAdmin }: SidebarProps) {
         </button>
       </div>
 
-      <nav className="mt-10 flex flex-1 flex-col gap-1">
+      <nav className="mt-10 flex flex-1 flex-col gap-1 overflow-y-auto">
         {links.map(({ href, label, Icon }) => (
           <Link
             key={href}
@@ -115,6 +167,58 @@ export function Sidebar({ nome, role, isPatrocinador, isAdmin }: SidebarProps) {
             {aberto && <span>{label}</span>}
           </Link>
         ))}
+
+        <Link
+          href={comunidadeLink.href}
+          title={aberto ? undefined : comunidadeLink.label}
+          className={`text-paper hover:bg-char flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm transition-colors ${
+            aberto ? "" : "justify-center"
+          }`}
+        >
+          <comunidadeLink.Icon className="h-5 w-5 flex-shrink-0" />
+          {aberto && <span>{comunidadeLink.label}</span>}
+        </Link>
+
+        {aberto && (
+          <div className="ml-4 flex flex-col gap-1 border-l border-line pl-3">
+            {comunidadeSubLinks.map(({ href, label, Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                className="text-smoke hover:text-paper flex items-center gap-2.5 rounded-sm px-2 py-2 text-sm transition-colors"
+              >
+                <Icon className="h-4 w-4 flex-shrink-0" />
+                <span>{label}</span>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {outrosLinks.map(({ href, label, Icon }) => (
+          <Link
+            key={href}
+            href={href}
+            title={aberto ? undefined : label}
+            className={`text-paper hover:bg-char flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm transition-colors ${
+              aberto ? "" : "justify-center"
+            }`}
+          >
+            <Icon className="h-5 w-5 flex-shrink-0" />
+            {aberto && <span>{label}</span>}
+          </Link>
+        ))}
+
+        <Link
+          href="/dashboard/perfil"
+          title={aberto ? undefined : "Meu perfil"}
+          className={`text-paper hover:bg-char flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm transition-colors ${
+            aberto ? "" : "justify-center"
+          }`}
+        >
+          <IconPerfil className="h-5 w-5 flex-shrink-0" />
+          {aberto && <span>Meu perfil</span>}
+        </Link>
+
         {isAdmin && (
           <Link
             href="/dashboard/admin"
