@@ -6,12 +6,13 @@ type VimeoEmbedProps = {
   videoId: string;
   title: string;
   className?: string;
+  aspectRatio?: string;
 };
 
-export function VimeoEmbed({ videoId, title, className }: VimeoEmbedProps) {
+export function VimeoEmbed({ videoId, title, className, aspectRatio = "75%" }: VimeoEmbedProps) {
   return (
     <div className={className}>
-      <div style={{ padding: "75% 0 0 0", position: "relative" }}>
+      <div style={{ padding: `${aspectRatio} 0 0 0`, position: "relative" }}>
         <iframe
           src={`https://player.vimeo.com/video/${videoId}?badge=0&autopause=0&player_id=0&app_id=58479`}
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
