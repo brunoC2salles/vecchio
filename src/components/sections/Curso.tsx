@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
+import { VimeoEmbed } from "@/components/VimeoEmbed";
 
 const fotos = [
   "/img/galeria/vecchio-2.jpg",
@@ -21,6 +22,13 @@ export function Curso() {
         <h2 className="font-display text-4xl text-paper md:text-6xl">
           L&apos;arte della pizza&nbsp;napoletana
         </h2>
+
+        <VimeoEmbed
+          videoId="1228534452"
+          title="L'Arte Della Vera Pizza - Clica Aqui Para Saber Mais"
+          className="mx-auto mt-8 max-w-md md:max-w-lg"
+        />
+
         <p className="text-smoke mt-6 text-lg leading-relaxed">
           Curso presencial em Santa Maria/RS. Dois dias de muita prática — do preparo
           da massa à abertura e cocção em forno a lenha — abordando toda a parte
