@@ -26,8 +26,8 @@ export function Curso() {
         <VimeoEmbed
           videoId="1228567273"
           title="L'Arte della Vera Pizza - Clique aqui para saber mais!"
-          aspectRatio="177.78%"
-          className="mx-auto mt-8 max-w-[280px] sm:max-w-xs"
+          aspectRatio="56.25%"
+          className="mx-auto mt-8 max-w-2xl"
         />
 
         <p className="text-smoke mt-6 text-lg leading-relaxed">
