@@ -3,22 +3,51 @@
 import { useState } from "react";
 import Image from "next/image";
 
-// Adicione a camiseta aqui quando a foto chegar:
-// { src: "/img/uniforme/camiseta.jpg", alt: "Camiseta LAB" },
-const imagens = [{ src: "/img/uniforme/avental.jpg", alt: "Avental Sauce & Co." }];
+type ImagemUniforme = {
+  id: string;
+  alt: string;
+  src?: string;
+  dinamica?: boolean;
+};
+
+const imagens: ImagemUniforme[] = [
+  { id: "camiseta-frente", alt: "Camiseta frente", dinamica: true },
+  { id: "camiseta-verso", alt: "Camiseta verso", dinamica: true },
+  { id: "avental", alt: "Avental Sauce & Co.", src: "/img/uniforme/avental.jpg" },
+];
 
 export function KitUniformeBadge() {
   const [aberto, setAberto] = useState(false);
   const [indice, setIndice] = useState(0);
+  const [carregando, setCarregando] = useState(false);
+  const [dataUrls, setDataUrls] = useState<Record<string, string>>({});
+
+  async function abrir() {
+    setIndice(0);
+    setAberto(true);
+
+    if (dataUrls["camiseta-frente"] && dataUrls["camiseta-verso"]) return;
+
+    setCarregando(true);
+    try {
+      const { camisetaFrenteDataUrl, camisetaVersoDataUrl } = await import("./kitUniformeImages");
+      setDataUrls({
+        "camiseta-frente": camisetaFrenteDataUrl,
+        "camiseta-verso": camisetaVersoDataUrl,
+      });
+    } finally {
+      setCarregando(false);
+    }
+  }
+
+  const atual = imagens[indice];
+  const src = atual.dinamica ? dataUrls[atual.id] : atual.src;
 
   return (
     <>
       <button
         type="button"
-        onClick={() => {
-          setIndice(0);
-          setAberto(true);
-        }}
+        onClick={abrir}
         className="bg-rosso text-paper ml-2 inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide"
       >
         Ver mais
@@ -39,21 +68,28 @@ export function KitUniformeBadge() {
               ×
             </button>
             <div className="border-line bg-char overflow-hidden rounded-sm border">
-              <Image
-                src={imagens[indice].src}
-                alt={imagens[indice].alt}
-                width={900}
-                height={1200}
-                className="h-auto max-h-[75vh] w-full object-contain"
-              />
-              <p className="text-smoke px-4 py-3 text-center text-sm">{imagens[indice].alt}</p>
+              {src ? (
+                <Image
+                  src={src}
+                  alt={atual.alt}
+                  width={900}
+                  height={1200}
+                  unoptimized={atual.dinamica}
+                  className="h-auto max-h-[75vh] w-full object-contain"
+                />
+              ) : (
+                <div className="flex h-64 items-center justify-center">
+                  <p className="text-smoke text-sm">{carregando ? "Carregando..." : ""}</p>
+                </div>
+              )}
+              <p className="text-smoke px-4 py-3 text-center text-sm">{atual.alt}</p>
             </div>
 
             {imagens.length > 1 && (
               <div className="mt-3 flex justify-center gap-2">
                 {imagens.map((img, i) => (
                   <button
-                    key={img.src}
+                    key={img.id}
                     type="button"
                     onClick={() => setIndice(i)}
                     className={`h-2 w-2 rounded-full ${i === indice ? "bg-rosso" : "bg-line"}`}
