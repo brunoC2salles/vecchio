@@ -20,7 +20,7 @@ export function Hero() {
   const imgY = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
-    <header className="relative overflow-hidden px-6 pb-16 pt-16 md:px-12 md:pb-24 md:pt-28">
+    <header className="relative overflow-hidden px-6 pb-16 pt-10 md:px-12 md:pb-24 md:pt-28">
       <nav className="absolute inset-x-0 top-0 z-10 mx-auto flex max-w-6xl items-center justify-between bg-transparent px-6 py-6 md:px-12 md:py-8">
         <Image src="/img/logo.png" alt="Vecchio School" width={96} height={96} className="h-14 w-auto md:h-16" />
 
@@ -39,22 +39,23 @@ export function Hero() {
         <MobileMenu />
       </nav>
 
-      <div className="relative mx-auto grid max-w-6xl gap-3 md:grid-cols-[1fr_1.2fr] md:items-stretch md:gap-6">
+      <div className="relative mx-auto grid max-w-6xl gap-1 md:grid-cols-[1fr_1.2fr] md:items-stretch md:gap-6">
         {/* No mobile essa imagem vem primeiro no fluxo e some com parallax ao rolar.
             No desktop ela nem entra no layout (display:none via md:hidden), quem
             aparece é a versão de baixo. Bleed horizontal (-mx-6) + proporção mais
-            alta (3/4) para o personagem ficar bem maior no mobile. */}
+            alta (3/4) para a caixa, com overflow-hidden + scale no <Image> para
+            o personagem (o desenho em si) ficar maior dentro dessa caixa. */}
         <motion.div
           ref={heroImgRef}
           style={{ opacity: imgOpacity, y: imgY }}
-          className="relative -mx-6 aspect-[3/4] w-[calc(100%+3rem)] md:hidden"
+          className="relative -mx-6 aspect-[3/4] w-[calc(100%+3rem)] overflow-hidden md:hidden"
         >
           <Image
             src="/img/galeria/hero-logo.png"
             alt="Vecchio School"
             fill
             priority
-            className="object-contain"
+            className="scale-[1.6] object-contain"
           />
         </motion.div>
 
