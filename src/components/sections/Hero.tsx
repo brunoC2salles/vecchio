@@ -44,7 +44,8 @@ export function Hero() {
             No desktop ela nem entra no layout (display:none via md:hidden), quem
             aparece é a versão de baixo. Bleed horizontal (-mx-6) + proporção mais
             alta (3/4) para a caixa, com overflow-hidden + scale no <Image> para
-            o personagem (o desenho em si) ficar maior dentro dessa caixa. */}
+            o personagem (o desenho em si) ficar maior dentro dessa caixa, com um
+            pequeno deslocamento para a esquerda para não cortar o "School". */}
         <motion.div
           ref={heroImgRef}
           style={{ opacity: imgOpacity, y: imgY }}
@@ -55,7 +56,7 @@ export function Hero() {
             alt="Vecchio School"
             fill
             priority
-            className="scale-[1.3] object-contain"
+            className="-translate-x-4 scale-[1.3] object-contain"
           />
         </motion.div>
 
