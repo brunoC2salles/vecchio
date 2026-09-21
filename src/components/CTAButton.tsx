@@ -9,7 +9,7 @@ export function CTAButton({ variant = "solid", className, children, ...props }: 
   return (
     <a
       className={clsx(
-        "font-display inline-flex items-center justify-center rounded-sm px-7 py-3 text-lg tracking-wide transition-transform duration-200 hover:-translate-y-0.5",
+        "font-display inline-flex items-center justify-center text-center rounded-sm px-7 py-3 text-lg tracking-wide transition-transform duration-200 hover:-translate-y-0.5",
         variant === "solid" && "bg-rosso text-paper",
         variant === "outline" && "border-2 border-paper text-paper",
         className
