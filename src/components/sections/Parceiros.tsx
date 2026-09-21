@@ -7,9 +7,9 @@ const comLogo = [
   { nome: "FornoSanto", logo: "/img/partners/fornosanto.png", link: "https://www.instagram.com/fornosanto/" },
   { nome: "LAB Confecções", logo: "/img/partners/lab.png", link: "https://www.instagram.com/labconfeccoes/" },
   { nome: "Bonfiore Latteria", logo: "/img/partners/bonfiore.png", link: "" }, // TODO: colocar o link do Instagram/site da Bonfiore
+  { nome: "C-Trade Gourmet", logo: "/img/partners/ctrade.png", link: "https://www.instagram.com/ctradegourmet" },
+  { nome: "Ciao", logo: "/img/partners/ciao.png", link: "https://www.instagram.com/ciaoilpomodorodinapoli/" },
 ];
-
-const pendentes = ["Ctrade", "Ciao"];
 
 export function Parceiros() {
   return (
@@ -29,14 +29,6 @@ export function Parceiros() {
             >
               <Image src={p.logo} alt={p.nome} width={160} height={96} className="h-full w-auto object-contain" />
             </a>
-          ))}
-          {pendentes.map((nome) => (
-            <div
-              key={nome}
-              className="border-line font-display text-smoke flex h-20 items-center justify-center rounded-sm border border-dashed text-center text-sm md:h-24"
-            >
-              {nome}
-            </div>
           ))}
         </div>
       </div>
