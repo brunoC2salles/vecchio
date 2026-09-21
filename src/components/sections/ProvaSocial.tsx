@@ -7,7 +7,12 @@ const formados = [
     depoimento:
       "Fiz o workshop na primeira edição do curso, em 2022. Esse foi o meu primeiro contato com pizza Napoletana e acabei me apaixonando. Hoje, é uma das coisas que eu mais amo fazer, por isso, posso ser suspeito para falar sobre o workshop. Até porque trabalho na Vecchio e sou um dos pizzaiolos daqui da casa, já tem um ano e meio.",
   },
-  { nome: "Luciana Soares", foto: "/img/prova-social/luciana.jpg" },
+  {
+    nome: "Régis Closel",
+    foto: "/img/prova-social/regis-closel.jpg",
+    depoimento:
+      "Participar do workshop sobre pizza napolitana com o pessoal da Vecchio foi sensacional! Aprender com pessoas que admiramos e que têm tanto orgulho e dedicação pelo preparo da pizza faz toda a diferença. Desde o curso, continuo fazendo pizzas em casa e colocando em prática tudo o que aprendi!",
+  },
 ];
 
 export function ProvaSocial() {
