@@ -20,7 +20,7 @@ export function Hero() {
   const imgY = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
-    <header className="relative overflow-hidden px-6 pb-16 pt-24 md:px-12 md:pb-24 md:pt-28">
+    <header className="relative overflow-hidden px-6 pb-16 pt-16 md:px-12 md:pb-24 md:pt-28">
       <nav className="absolute inset-x-0 top-0 z-10 mx-auto flex max-w-6xl items-center justify-between bg-transparent px-6 py-6 md:px-12 md:py-8">
         <Image src="/img/logo.png" alt="Vecchio School" width={96} height={96} className="h-14 w-auto md:h-16" />
 
@@ -39,15 +39,15 @@ export function Hero() {
         <MobileMenu />
       </nav>
 
-      <div className="relative mx-auto grid max-w-6xl gap-6 md:grid-cols-[1fr_1.2fr] md:items-stretch">
+      <div className="relative mx-auto grid max-w-6xl gap-3 md:grid-cols-[1fr_1.2fr] md:items-stretch md:gap-6">
         {/* No mobile essa imagem vem primeiro no fluxo e some com parallax ao rolar.
             No desktop ela nem entra no layout (display:none via md:hidden), quem
             aparece é a versão de baixo. Bleed horizontal (-mx-6) + proporção mais
-            alta (4/5) para a imagem ficar bem maior no mobile. */}
+            alta (3/4) para o personagem ficar bem maior no mobile. */}
         <motion.div
           ref={heroImgRef}
           style={{ opacity: imgOpacity, y: imgY }}
-          className="relative -mx-6 aspect-[4/5] w-[calc(100%+3rem)] md:hidden"
+          className="relative -mx-6 aspect-[3/4] w-[calc(100%+3rem)] md:hidden"
         >
           <Image
             src="/img/galeria/hero-logo.png"
@@ -63,7 +63,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease }}
-            className="font-display text-center text-4xl leading-[1.05] text-paper md:text-left md:text-7xl"
+            className="font-display text-center text-3xl leading-[1.05] text-paper md:text-left md:text-7xl"
           >
             A escola Vecchio de fazer la Vera&nbsp;Pizza
           </motion.h1>
