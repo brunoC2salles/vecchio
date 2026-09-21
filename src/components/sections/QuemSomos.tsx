@@ -26,7 +26,7 @@ export function QuemSomos() {
             característica a inovação na criação dos pratos, sempre mantendo a
             tradição rigorosa dos processos napoletanos.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
             <CTAButton href="#metodologia" variant="outline">
               Conheça o curso
             </CTAButton>
