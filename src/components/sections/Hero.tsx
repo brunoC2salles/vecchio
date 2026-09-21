@@ -55,7 +55,7 @@ export function Hero() {
             alt="Vecchio School"
             fill
             priority
-            className="scale-[1.6] object-contain"
+            className="scale-[1.3] object-contain"
           />
         </motion.div>
 
