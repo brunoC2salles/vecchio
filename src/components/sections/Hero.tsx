@@ -42,11 +42,12 @@ export function Hero() {
       <div className="relative mx-auto grid max-w-6xl gap-6 md:grid-cols-[1fr_1.2fr] md:items-stretch">
         {/* No mobile essa imagem vem primeiro no fluxo e some com parallax ao rolar.
             No desktop ela nem entra no layout (display:none via md:hidden), quem
-            aparece é a versão de baixo. */}
+            aparece é a versão de baixo. Bleed horizontal (-mx-6) + proporção mais
+            alta (4/5) para a imagem ficar bem maior no mobile. */}
         <motion.div
           ref={heroImgRef}
           style={{ opacity: imgOpacity, y: imgY }}
-          className="relative aspect-[4/3] w-full md:hidden"
+          className="relative -mx-6 aspect-[4/5] w-[calc(100%+3rem)] md:hidden"
         >
           <Image
             src="/img/galeria/hero-logo.png"
@@ -62,7 +63,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease }}
-            className="font-display text-4xl leading-[1.05] text-paper md:text-7xl"
+            className="font-display text-center text-4xl leading-[1.05] text-paper md:text-left md:text-7xl"
           >
             A escola Vecchio de fazer la Vera&nbsp;Pizza
           </motion.h1>
@@ -71,7 +72,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.12, ease }}
-            className="text-smoke mt-6 max-w-md text-lg leading-relaxed md:text-xl"
+            className="text-smoke mx-auto mt-6 max-w-md text-center text-lg leading-relaxed md:mx-0 md:text-left md:text-xl"
           >
             Aprenda o método verace da pizza napoletana com quem vive isso todos os
             dias — da massa ao forno a lenha, ao lado de quem faz acontecer todos os
@@ -82,7 +83,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.24, ease }}
-            className="mt-9"
+            className="mt-9 flex justify-center md:justify-start"
           >
             <CTAButton href="#investimento">Quero minha vaga</CTAButton>
           </motion.div>
