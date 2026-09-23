@@ -59,8 +59,20 @@ p {
   text-wrap: pretty;
 }
 
+/* A Bogart (versão Trial) não tem os algarismos 0-9: todos viram um círculo cortado.
+   Esta face cobre só os números (unicode-range) e vem antes da Bogart na pilha,
+   então letras continuam em Bogart e números saem em Libre Baskerville Bold. */
+@font-face {
+  font-family: "Display Digits";
+  src: url("../fonts/LibreBaskerville.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0030-0039;
+}
+
 .font-display {
-  font-family: var(--font-display), ui-serif, serif;
+  font-family: "Display Digits", var(--font-display), ui-serif, serif;
   font-weight: 700;
 }
 
