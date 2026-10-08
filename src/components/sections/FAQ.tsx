@@ -26,7 +26,7 @@ const perguntas = [
   },
   {
     q: "Como funciona o pagamento?",
-    a: "À vista por R$849 no Pix, ou no cartão por R$897, em até 3x de R$299.",
+    a: "À vista por R$847 no Pix, ou no cartão por R$987, em até 3x de R$329 sem juros.",
   },
   {
     q: "O aprendizado acaba no fim do curso?",

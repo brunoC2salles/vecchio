@@ -16,7 +16,13 @@ export function Investimento() {
     <section id="investimento" className="px-6 py-4 md:px-12">
       <div className="border-line bg-char relative mx-auto max-w-4xl overflow-hidden rounded-sm border p-8 md:p-14">
         <div className="checker absolute -right-6 -top-6 h-20 w-20 rotate-12 rounded-sm opacity-90" />
-        <h2 className="font-display text-4xl text-paper md:text-5xl">Investimento</h2>
+        <div className="flex flex-col-reverse items-end gap-3 md:flex-row md:items-start md:justify-between">
+          <h2 className="font-display self-start text-4xl text-paper md:text-5xl">Investimento</h2>
+          {/* Margem à direita para não encostar no quadriculado do canto */}
+          <span className="bg-rosso text-paper font-body mr-8 shrink-0 rounded-sm px-3 py-1.5 text-sm font-bold tracking-wide md:mr-4 md:mt-3">
+            10 vagas por turma
+          </span>
+        </div>
 
         <div className="mt-6">
           <div className="flex flex-wrap items-baseline gap-3">
@@ -32,8 +38,7 @@ export function Investimento() {
         <div className="border-line mt-8 border-t pt-6">
           <p className="text-rosso font-display text-sm">Turmas</p>
           <p className="text-paper mt-2 text-lg leading-snug">
-            24 e 25 de outubro ou 7 e 8 de novembro, das 10h às 14h. Você escolhe a data na
-            inscrição. 10 vagas por turma.
+            24 e 25 de outubro ou 7 e 8 de novembro, das 10h às 14h. Você escolhe a data na inscrição.
           </p>
         </div>
 
