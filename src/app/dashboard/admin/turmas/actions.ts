@@ -32,6 +32,21 @@ export async function updateMatriculaStatus(id: string, formData: FormData) {
   revalidatePath("/dashboard/admin/turmas");
 }
 
+export async function updateMatriculaData(id: string, formData: FormData) {
+  // Troca de data é exclusiva do admin: confere o papel antes de gravar.
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return;
+  const { data: perfil } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+  if (perfil?.role !== "admin") return;
+
+  const turmaDataId = String(formData.get("turma_data_id") ?? "") || null;
+  await supabase.from("matriculas").update({ turma_data_id: turmaDataId }).eq("id", id);
+  revalidatePath("/dashboard/admin/turmas");
+}
+
 export async function excluirMatricula(id: string) {
   // Remove só a matrícula (a conta do aluno continua existindo). Para excluir
   // o aluno inteiro, use a página de Membros.

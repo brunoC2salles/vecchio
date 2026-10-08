@@ -1,5 +1,9 @@
 import Image from "next/image";
+import { cookies } from "next/headers";
 import { setPassword } from "./actions";
+import { createClient } from "@/lib/supabase/server";
+import { buscarMatriculaPendente, COOKIE_DATA_PREFERIDA } from "@/lib/turma-datas";
+import { EscolhaDataTurma } from "@/components/EscolhaDataTurma";
 
 export default async function SetPasswordPage({
   searchParams,
@@ -7,6 +11,14 @@ export default async function SetPasswordPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const { error } = await searchParams;
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const pendente = user ? await buscarMatriculaPendente(user.id) : null;
+  const preSelecionada = (await cookies()).get(COOKIE_DATA_PREFERIDA)?.value ?? null;
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6">
@@ -17,7 +29,9 @@ export default async function SetPasswordPage({
 
         <h1 className="font-display text-paper mt-8 text-center text-3xl">Crie sua senha</h1>
         <p className="text-smoke mt-2 text-center text-sm">
-          Defina a senha de acesso à sua conta Vecchio School.
+          {pendente
+            ? "Confirme a data da sua turma e defina a senha de acesso à sua conta Vecchio School."
+            : "Defina a senha de acesso à sua conta Vecchio School."}
         </p>
 
         {error && (
@@ -25,6 +39,12 @@ export default async function SetPasswordPage({
         )}
 
         <form action={setPassword} className="mt-8 space-y-4">
+          {pendente && (
+            <>
+              <input type="hidden" name="matricula_id" value={pendente.matriculaId} />
+              <EscolhaDataTurma datas={pendente.datas} preSelecionada={preSelecionada} />
+            </>
+          )}
           <div>
             <label htmlFor="password" className="text-smoke text-sm">
               Nova senha

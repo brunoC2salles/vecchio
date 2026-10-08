@@ -9,7 +9,7 @@ const fotos = [
 ];
 
 const detalhes = [
-  { label: "Quando", valor: "24 e 25 de outubro, das 10h às 14h" },
+  { label: "Quando", valor: "Duas turmas à escolha: 24 e 25 de outubro ou 7 e 8 de novembro, das 10h às 14h. 10 vagas por turma." },
   { label: "Onde", valor: "Pizzaria Vecchio Napoletana — Rua Silva Jardim 1043, Santa Maria/RS" },
   { label: "Conduzido por", valor: "Chef pizzaiolo Lucas Molz Lara, certificado AVPN" },
 ];

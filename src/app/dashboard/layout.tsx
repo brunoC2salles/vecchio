@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Sidebar } from "@/components/Sidebar";
+import { buscarMatriculaPendente } from "@/lib/turma-datas";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -17,6 +18,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
     .select("nome, role, is_patrocinador")
     .eq("id", user.id)
     .single();
+
+  // Aluno com matrícula sem data escolhida precisa confirmar a turma antes de seguir.
+  if (profile?.role !== "admin" && (await buscarMatriculaPendente(user.id))) {
+    redirect("/escolher-data");
+  }
 
   return (
     <div className="flex min-h-screen">

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
-import { CTAButton } from "@/components/CTAButton";
+import { cookies } from "next/headers";
+import { COOKIE_DATA_PREFERIDA, listarDatasTurma } from "@/lib/turma-datas";
+import { MatriculaCheckout } from "./MatriculaCheckout";
 
 export default async function MatriculaPage() {
   const supabase = await createClient();
@@ -13,6 +15,9 @@ export default async function MatriculaPage() {
     .order("data_evento", { ascending: true })
     .limit(1)
     .maybeSingle();
+
+  const datas = turma ? await listarDatasTurma(turma.id) : [];
+  const preSelecionada = (await cookies()).get(COOKIE_DATA_PREFERIDA)?.value ?? null;
 
   const linkPix = turma?.asaas_payment_link_id_pix
     ? `https://www.asaas.com/c/${turma.asaas_payment_link_id_pix}`
@@ -37,41 +42,17 @@ export default async function MatriculaPage() {
         ) : (
           <>
             <p className="text-smoke mt-2 text-center text-sm">
-              Inscrição para {turma.nome}. Escolha a forma de pagamento pra ir direto pro checkout seguro do Asaas.
+              {datas.length > 1
+                ? `Inscrição para ${turma.nome}. Escolha a data da sua turma e a forma de pagamento para ir direto ao checkout seguro do Asaas.`
+                : `Inscrição para ${turma.nome}. Escolha a forma de pagamento pra ir direto pro checkout seguro do Asaas.`}
             </p>
 
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              <div className="border-line bg-char rounded-sm border p-6 text-center">
-                <p className="text-smoke text-sm">À vista</p>
-                <p className="font-display text-oro mt-1 text-4xl">R$847</p>
-                <p className="text-smoke mt-1 text-sm">no Pix</p>
-                {linkPix ? (
-                  <CTAButton href={linkPix} className="mt-6 w-full">
-                    Pagar com Pix
-                  </CTAButton>
-                ) : (
-                  <p className="text-smoke mt-6 text-xs">Link de pagamento não configurado.</p>
-                )}
-              </div>
-
-              <div className="border-line bg-char rounded-sm border p-6 text-center">
-                <p className="text-smoke text-sm">Parcelado</p>
-                <p className="font-display text-oro mt-1 text-4xl">R$987</p>
-                <p className="text-smoke mt-1 text-sm">em até 3x sem juros no cartão</p>
-                {linkCartao ? (
-                  <CTAButton href={linkCartao} className="mt-6 w-full">
-                    Pagar com Cartão
-                  </CTAButton>
-                ) : (
-                  <p className="text-smoke mt-6 text-xs">Link de pagamento não configurado.</p>
-                )}
-              </div>
-            </div>
-
-            <p className="text-smoke mt-8 text-center text-xs">
-              Depois de pagar, você recebe por e-mail o código de acesso ao curso presencial e o link pra criar
-              sua senha de acesso à comunidade.
-            </p>
+            <MatriculaCheckout
+              datas={datas}
+              linkPix={linkPix}
+              linkCartao={linkCartao}
+              preSelecionada={preSelecionada}
+            />
           </>
         )}
 

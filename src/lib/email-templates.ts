@@ -35,6 +35,7 @@ export function compraConfirmadaEmail(params: {
     <p style="color:#f6f1e6;font-size:15px;line-height:1.6;">
       Falta só um passo: criar sua senha de acesso à comunidade Vecchio School, onde você já pode
       trocar ideia com professores, outros alunos e acompanhar as novidades antes do curso.
+      Ao criar a senha, confirme também a data da sua turma presencial.
     </p>
     ${botao(criarContaUrl, "Criar minha senha")}
     <p style="color:#b8afa1;font-size:12px;margin-top:20px;">Se você não fez essa inscrição, pode ignorar este e-mail.</p>

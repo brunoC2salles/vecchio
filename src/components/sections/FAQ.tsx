@@ -10,7 +10,7 @@ const perguntas = [
   },
   {
     q: "Quais os dias e horários?",
-    a: "24 e 25 de outubro, das 10h às 14h.",
+    a: "São duas turmas, você escolhe a sua na inscrição: 24 e 25 de outubro ou 7 e 8 de novembro, sempre das 10h às 14h. Cada turma tem 10 vagas.",
   },
   {
     q: "Onde é realizado o curso?",

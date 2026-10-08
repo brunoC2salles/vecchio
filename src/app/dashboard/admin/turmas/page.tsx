@@ -6,7 +6,9 @@ import {
   updateTurmaStatus,
   updateTurmaLinksAsaas,
   excluirMatricula,
+  updateMatriculaData,
 } from "./actions";
+import { listarDatasTurma, type TurmaData } from "@/lib/turma-datas";
 import { ConfirmButton } from "@/components/ConfirmButton";
 
 function formatarData(iso: string | null) {
@@ -20,9 +22,14 @@ export default async function TurmasPage() {
   const { data: turmas } = await supabase
     .from("turmas")
     .select(
-      "id, nome, tipo, data_evento, status, asaas_payment_link_id_pix, asaas_payment_link_id_cartao, matriculas ( id, status, codigo_acesso_presencial, comprado_em, profile:profiles ( nome, email ) )"
+      "id, nome, tipo, data_evento, status, asaas_payment_link_id_pix, asaas_payment_link_id_cartao, matriculas ( id, status, turma_data_id, codigo_acesso_presencial, comprado_em, profile:profiles ( nome, email ) )"
     )
     .order("criado_em", { ascending: false });
+
+  const datasPorTurma = new Map<string, TurmaData[]>();
+  for (const t of turmas ?? []) {
+    datasPorTurma.set(t.id, await listarDatasTurma(t.id));
+  }
 
   let linksAsaas: Awaited<ReturnType<typeof listAsaasPaymentLinks>> = [];
   let erroLinksAsaas: string | null = null;
@@ -51,50 +58,112 @@ export default async function TurmasPage() {
             </form>
           </div>
 
-          <div className="mt-4 space-y-2">
-            {(turma.matriculas ?? []).map((m) => {
+          {(() => {
+            const datas = datasPorTurma.get(turma.id) ?? [];
+            const matriculas = turma.matriculas ?? [];
+
+            const renderMatricula = (m: (typeof matriculas)[number]) => {
               const perfilMatricula = Array.isArray(m.profile) ? m.profile[0] : m.profile;
               return (
-              <div key={m.id} className="border-line flex items-center justify-between rounded-sm border p-3 text-sm">
-                <div>
-                  <p className="text-paper">{perfilMatricula?.nome ?? "—"}</p>
-                  <p className="text-smoke text-xs">{perfilMatricula?.email}</p>
-                  {m.codigo_acesso_presencial && (
-                    <p className="text-oro text-xs">código: {m.codigo_acesso_presencial}</p>
-                  )}
+                <div
+                  key={m.id}
+                  className="border-line flex flex-wrap items-center justify-between gap-3 rounded-sm border p-3 text-sm"
+                >
+                  <div>
+                    <p className="text-paper">{perfilMatricula?.nome ?? "—"}</p>
+                    <p className="text-smoke text-xs">{perfilMatricula?.email}</p>
+                    {m.codigo_acesso_presencial && (
+                      <p className="text-oro text-xs">código: {m.codigo_acesso_presencial}</p>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    {datas.length > 0 && (
+                      <form action={updateMatriculaData.bind(null, m.id)} className="flex items-center gap-2">
+                        <select
+                          name="turma_data_id"
+                          defaultValue={m.turma_data_id ?? ""}
+                          className="border-line bg-ink text-paper rounded-sm border px-2 py-1 text-xs outline-none focus:border-rosso"
+                        >
+                          <option value="">Sem data</option>
+                          {datas.map((d) => (
+                            <option key={d.id} value={d.id}>
+                              {d.rotulo}
+                            </option>
+                          ))}
+                        </select>
+                        <button type="submit" className="text-oro text-xs underline underline-offset-2">
+                          trocar data
+                        </button>
+                      </form>
+                    )}
+                    <form action={updateMatriculaStatus.bind(null, m.id)} className="flex items-center gap-2">
+                      <select
+                        name="status"
+                        defaultValue={m.status}
+                        className="border-line bg-ink text-paper rounded-sm border px-2 py-1 text-xs outline-none focus:border-rosso"
+                      >
+                        <option value="teste">Teste</option>
+                        <option value="pago">Pago</option>
+                        <option value="cancelado">Cancelado</option>
+                      </select>
+                      <button type="submit" className="text-oro text-xs underline underline-offset-2">
+                        salvar
+                      </button>
+                    </form>
+                    <form action={excluirMatricula.bind(null, m.id)}>
+                      <ConfirmButton
+                        type="submit"
+                        confirmMessage={`Remover a matrícula de ${perfilMatricula?.nome ?? "esse aluno"} nesta turma? A conta dele continua existindo.`}
+                        className="text-rosso text-xs underline underline-offset-2"
+                      >
+                        remover
+                      </ConfirmButton>
+                    </form>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <form action={updateMatriculaStatus.bind(null, m.id)} className="flex items-center gap-2">
-                    <select
-                      name="status"
-                      defaultValue={m.status}
-                      className="border-line bg-ink text-paper rounded-sm border px-2 py-1 text-xs outline-none focus:border-rosso"
-                    >
-                      <option value="teste">Teste</option>
-                      <option value="pago">Pago</option>
-                      <option value="cancelado">Cancelado</option>
-                    </select>
-                    <button type="submit" className="text-oro text-xs underline underline-offset-2">
-                      salvar
-                    </button>
-                  </form>
-                  <form action={excluirMatricula.bind(null, m.id)}>
-                    <ConfirmButton
-                      type="submit"
-                      confirmMessage={`Remover a matrícula de ${perfilMatricula?.nome ?? "esse aluno"} nesta turma? A conta dele continua existindo.`}
-                      className="text-rosso text-xs underline underline-offset-2"
-                    >
-                      remover
-                    </ConfirmButton>
-                  </form>
-                </div>
-              </div>
               );
-            })}
-            {(turma.matriculas ?? []).length === 0 && (
-              <p className="text-smoke text-xs">Nenhuma matrícula nesta turma ainda.</p>
-            )}
-          </div>
+            };
+
+            if (matriculas.length === 0) {
+              return <p className="text-smoke mt-4 text-xs">Nenhuma matrícula nesta turma ainda.</p>;
+            }
+
+            if (datas.length === 0) {
+              return <div className="mt-4 space-y-2">{matriculas.map(renderMatricula)}</div>;
+            }
+
+            const semData = matriculas.filter(
+              (m) => !m.turma_data_id || !datas.some((d) => d.id === m.turma_data_id)
+            );
+
+            return (
+              <div className="mt-4 space-y-6">
+                {datas.map((d) => {
+                  const daData = matriculas.filter((m) => m.turma_data_id === d.id);
+                  return (
+                    <div key={d.id}>
+                      <div className="flex items-baseline justify-between">
+                        <p className="font-display text-paper text-lg">{d.rotulo}</p>
+                        <p className={d.lotada ? "text-rosso text-xs" : "text-smoke text-xs"}>
+                          {d.ocupadas}/{d.vagas} vagas{d.lotada ? " (lotada)" : ""}
+                        </p>
+                      </div>
+                      <div className="mt-2 space-y-2">
+                        {daData.map(renderMatricula)}
+                        {daData.length === 0 && <p className="text-smoke text-xs">Nenhum aluno nesta data ainda.</p>}
+                      </div>
+                    </div>
+                  );
+                })}
+                {semData.length > 0 && (
+                  <div>
+                    <p className="font-display text-rosso text-lg">Sem data escolhida</p>
+                    <div className="mt-2 space-y-2">{semData.map(renderMatricula)}</div>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
 
           <form
             action={updateTurmaLinksAsaas.bind(null, turma.id)}

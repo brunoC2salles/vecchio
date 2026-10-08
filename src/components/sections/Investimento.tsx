@@ -29,6 +29,14 @@ export function Investimento() {
           </p>
         </div>
 
+        <div className="border-line mt-8 border-t pt-6">
+          <p className="text-rosso font-display text-sm">Turmas</p>
+          <p className="text-paper mt-2 text-lg leading-snug">
+            24 e 25 de outubro ou 7 e 8 de novembro, das 10h às 14h. Você escolhe a data na
+            inscrição. 10 vagas por turma.
+          </p>
+        </div>
+
         <ul className="mt-10 space-y-4">
           {inclusos.map((item) => (
             <li key={item} className="text-paper flex items-start gap-3 text-lg leading-snug">
