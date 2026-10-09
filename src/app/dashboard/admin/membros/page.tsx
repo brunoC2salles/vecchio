@@ -29,7 +29,9 @@ export default async function MembrosPage({
           <p className="text-paper text-sm">
             {semSenha.length === 0
               ? "Todos os alunos com matrícula ativa já criaram a senha."
-              : `${semSenha.length} aluno${semSenha.length === 1 ? "" : "s"} ainda não criou a senha.`}
+              : semSenha.length === 1
+                ? "1 aluno ainda não criou a senha."
+                : `${semSenha.length} alunos ainda não criaram a senha.`}
           </p>
           {semSenha.length > 0 && (
             <p className="text-smoke mt-1 text-xs">{semSenha.map((p) => p.nome || p.email).join(", ")}</p>
