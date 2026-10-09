@@ -5,11 +5,11 @@ import { confirmarLink } from "./actions";
 export default async function ConfirmarPage({
   searchParams,
 }: {
-  searchParams: Promise<{ token_hash?: string; type?: string }>;
+  searchParams: Promise<{ token_hash?: string; type?: string; acao?: string }>;
 }) {
-  const { token_hash: tokenHash, type } = await searchParams;
+  const { token_hash: tokenHash, type, acao } = await searchParams;
   const valido = Boolean(tokenHash) && (type === "invite" || type === "recovery");
-  const recuperacao = type === "recovery";
+  const recuperacao = type === "recovery" && acao !== "criar";
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6">

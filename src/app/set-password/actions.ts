@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { confirmarDataMatricula } from "@/lib/turma-datas";
 
 export async function setPassword(formData: FormData) {
@@ -40,6 +41,14 @@ export async function setPassword(formData: FormData) {
 
   if (error) {
     redirect("/set-password?error=" + encodeURIComponent(error.message));
+  }
+
+  // Marca que o aluno já criou a senha (o reenvio de link do admin ignora quem tem a marca).
+  const {
+    data: { user: atual },
+  } = await supabase.auth.getUser();
+  if (atual) {
+    await createAdminClient().from("profiles").update({ senha_definida: true }).eq("id", atual.id);
   }
 
   redirect("/dashboard");

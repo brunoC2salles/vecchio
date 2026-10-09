@@ -1,8 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
-import { updateMembro, excluirMembro } from "./actions";
+import { updateMembro, excluirMembro, listarSemSenha, reenviarLinksSemSenha } from "./actions";
 import { ConfirmButton } from "@/components/ConfirmButton";
 
-export default async function MembrosPage() {
+export default async function MembrosPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ reenvio?: string; falhas?: string }>;
+}) {
+  const { reenvio, falhas } = await searchParams;
+  const semSenha = await listarSemSenha();
   const supabase = await createClient();
   const { data: membros } = await supabase
     .from("profiles")
@@ -11,6 +17,37 @@ export default async function MembrosPage() {
 
   return (
     <div>
+      {reenvio !== undefined && (
+        <p className="border-line text-paper mb-6 rounded-sm border px-4 py-3 text-sm">
+          Link reenviado para {reenvio} aluno{reenvio === "1" ? "" : "s"}.
+          {falhas && <span className="text-rosso block mt-1">Falha no envio para: {falhas}</span>}
+        </p>
+      )}
+
+      <div className="border-line mb-8 flex flex-col gap-4 rounded-sm border px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-paper text-sm">
+            {semSenha.length === 0
+              ? "Todos os alunos com matrícula ativa já criaram a senha."
+              : `${semSenha.length} aluno${semSenha.length === 1 ? "" : "s"} ainda não criou a senha.`}
+          </p>
+          {semSenha.length > 0 && (
+            <p className="text-smoke mt-1 text-xs">{semSenha.map((p) => p.nome || p.email).join(", ")}</p>
+          )}
+        </div>
+        {semSenha.length > 0 && (
+          <form action={reenviarLinksSemSenha}>
+            <ConfirmButton
+              type="submit"
+              confirmMessage={`Enviar um novo link de criação de senha para ${semSenha.length} aluno${semSenha.length === 1 ? "" : "s"}?`}
+              className="font-display bg-rosso text-paper w-full rounded-sm px-5 py-2.5 text-base tracking-wide sm:w-auto"
+            >
+              Reenviar link para quem não criou senha
+            </ConfirmButton>
+          </form>
+        )}
+      </div>
+
       <p className="text-smoke text-sm">
         {(membros ?? []).length} membro{(membros ?? []).length === 1 ? "" : "s"} cadastrado
         {(membros ?? []).length === 1 ? "" : "s"}.

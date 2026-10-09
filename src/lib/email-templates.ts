@@ -60,3 +60,23 @@ export function recuperarSenhaEmail(params: { nome: string; resetUrl: string }) 
 
   return { subject: "Redefinir sua senha — Vecchio School", html };
 }
+
+export function novoLinkAcessoEmail(params: { nome: string; url: string }) {
+  const { nome, url } = params;
+  const html = `${WRAPPER_START}
+    <h1 style="color:#f6f1e6;font-size:26px;margin:0 0 16px;">Olá, ${nome}!</h1>
+    <p style="color:#f6f1e6;font-size:15px;line-height:1.6;">
+      Identificamos uma falha no link que enviamos para você criar sua senha na comunidade
+      Vecchio School. Pedimos desculpas pelo transtorno.
+    </p>
+    <p style="color:#f6f1e6;font-size:15px;line-height:1.6;">
+      O problema já foi corrigido. Use o botão abaixo para criar sua senha e acessar a comunidade.
+    </p>
+    ${botao(url, "Criar minha senha")}
+    <p style="color:#b8afa1;font-size:12px;margin-top:20px;">
+      O link é pessoal. Se ele expirar, use "Esqueci minha senha" na página de login.
+    </p>
+  ${WRAPPER_END}`;
+
+  return { subject: "Seu novo link de acesso à Vecchio School", html };
+}
