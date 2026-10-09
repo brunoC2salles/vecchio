@@ -4,6 +4,7 @@ import { getAsaasCustomer } from "@/lib/asaas";
 import { sendEmail } from "@/lib/email";
 import { compraConfirmadaEmail } from "@/lib/email-templates";
 import { gerarCodigoAcesso } from "@/lib/codigo-acesso";
+import { linkConfirmacaoAuth } from "@/lib/auth-links";
 
 // PAYMENT_CONFIRMED cobre cartão (aprovação imediata) e boleto.
 // PAYMENT_RECEIVED cobre Pix e dinheiro (não existe CONFIRMED nesse fluxo).
@@ -132,7 +133,7 @@ export async function POST(request: NextRequest) {
       nome,
       codigo,
       turmaNome: turma.nome,
-      criarContaUrl: linked.properties.action_link,
+      criarContaUrl: linkConfirmacaoAuth(linked.properties.hashed_token, "invite"),
     });
 
     await sendEmail({ to: email, subject, html });

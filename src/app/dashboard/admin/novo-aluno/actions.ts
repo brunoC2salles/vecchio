@@ -5,6 +5,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { sendEmail } from "@/lib/email";
 import { compraConfirmadaEmail } from "@/lib/email-templates";
+import { linkConfirmacaoAuth } from "@/lib/auth-links";
 
 function gerarCodigoAcesso() {
   return Math.random().toString(36).slice(2, 10).toUpperCase();
@@ -62,7 +63,7 @@ export async function convidarAluno(formData: FormData) {
     nome,
     codigo: codigo || "—",
     turmaNome,
-    criarContaUrl: linked.properties.action_link,
+    criarContaUrl: linkConfirmacaoAuth(linked.properties.hashed_token, "invite"),
   });
 
   await sendEmail({ to: email, subject, html });

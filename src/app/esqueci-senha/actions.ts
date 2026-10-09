@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
 import { recuperarSenhaEmail } from "@/lib/email-templates";
+import { linkConfirmacaoAuth } from "@/lib/auth-links";
 
 export async function solicitarRecuperacao(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim();
@@ -31,7 +32,7 @@ export async function solicitarRecuperacao(formData: FormData) {
     const { data: profile } = await admin.from("profiles").select("nome").eq("id", linked.user.id).single();
     const nome = profile?.nome?.split(" ")[0] ?? "aluno";
 
-    const { subject, html } = recuperarSenhaEmail({ nome, resetUrl: linked.properties.action_link });
+    const { subject, html } = recuperarSenhaEmail({ nome, resetUrl: linkConfirmacaoAuth(linked.properties.hashed_token, "recovery") });
 
     try {
       await sendEmail({ to: email, subject, html });
