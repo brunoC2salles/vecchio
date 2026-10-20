@@ -1,5 +1,30 @@
+import clsx from "clsx";
 import { CTAButton } from "@/components/CTAButton";
 import { KitUniformeBadge } from "@/components/KitUniformeBadge";
+import { SoldOutBadge } from "@/components/SoldOutBadge";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { listarDatasTurma, type TurmaData } from "@/lib/turma-datas";
+
+const LINK_LISTA_ESPERA =
+  "https://wa.me/5555999211984?text=Bene%20Vecchios%2C%20quero%20entrar%20na%20lista%20de%20espera%20do%20curso!";
+
+// Mesma turma que a página de matrícula usa: a ativa com evento mais próximo.
+// Se a consulta falhar, a seção cai no texto fixo e o botão continua indo para /matricula.
+async function buscarDatas(): Promise<TurmaData[]> {
+  try {
+    const admin = createAdminClient();
+    const { data: turma } = await admin
+      .from("turmas")
+      .select("id")
+      .eq("status", "ativa")
+      .order("data_evento", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    return turma ? await listarDatasTurma(turma.id) : [];
+  } catch {
+    return [];
+  }
+}
 
 const inclusos = [
   "Aula com chef pizzaiolo verace",
@@ -11,7 +36,10 @@ const inclusos = [
   "Condição especial na compra do forno Pompei, dos parceiros FornoSanto",
 ];
 
-export function Investimento() {
+export async function Investimento() {
+  const datas = await buscarDatas();
+  const todasLotadas = datas.length > 0 && datas.every((d) => d.lotada);
+
   return (
     <section id="investimento" className="px-6 py-4 md:px-12">
       <div className="border-line bg-char relative mx-auto max-w-4xl overflow-hidden rounded-sm border p-8 md:p-14">
@@ -37,9 +65,28 @@ export function Investimento() {
 
         <div className="border-line mt-8 border-t pt-6">
           <p className="text-rosso font-display text-sm">Turmas</p>
-          <p className="text-paper mt-2 text-lg leading-snug">
-            24 e 25 de outubro ou 7 e 8 de novembro, das 10h às 14h. Você escolhe a data na inscrição.
-          </p>
+          {datas.length === 0 ? (
+            <p className="text-paper mt-2 text-lg leading-snug">
+              24 e 25 de outubro ou 7 e 8 de novembro, das 10h às 14h. Você escolhe a data na inscrição.
+            </p>
+          ) : (
+            <>
+              <div className="mt-6 grid gap-6 md:grid-cols-2">
+                {datas.map((d) => (
+                  <div key={d.id} className="border-line relative rounded-sm border px-5 pb-5 pt-6 text-center">
+                    {d.lotada && <SoldOutBadge />}
+                    <div className={clsx(d.lotada && "opacity-50")}>
+                      <span className="font-body text-paper block text-2xl font-bold">{d.rotulo}</span>
+                      <span className="text-smoke mt-1 block text-sm">das 10h às 14h</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {!todasLotadas && (
+                <p className="text-smoke mt-4 text-base">Você escolhe a data na inscrição.</p>
+              )}
+            </>
+          )}
         </div>
 
         <ul className="mt-10 space-y-4">
@@ -55,7 +102,13 @@ export function Investimento() {
         </ul>
 
         <div className="mt-10 flex justify-center">
-          <CTAButton href="/matricula">Garantir minha vaga</CTAButton>
+          {todasLotadas ? (
+            <CTAButton href={LINK_LISTA_ESPERA} target="_blank" rel="noopener noreferrer" variant="outline">
+              Entrar na lista de espera
+            </CTAButton>
+          ) : (
+            <CTAButton href="/matricula">Garantir minha vaga</CTAButton>
+          )}
         </div>
       </div>
     </section>

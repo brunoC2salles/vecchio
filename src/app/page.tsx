@@ -10,6 +10,9 @@ import { Footer } from "@/components/sections/Footer";
 import { SeamDivider } from "@/components/SeamDivider";
 import { WheatDoodle, DoughDoodle, PeelDoodle, SliceDoodle, FlameDoodle } from "@/components/Doodle";
 
+// Revalida a cada 60s para a seção Investimento refletir datas fechadas ou lotadas.
+export const revalidate = 60;
+
 const iconClass = "h-9 w-9 md:h-11 md:w-11";
 
 export default function Home() {

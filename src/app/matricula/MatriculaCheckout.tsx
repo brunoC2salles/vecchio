@@ -3,6 +3,7 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { CTAButton } from "@/components/CTAButton";
+import { SoldOutBadge } from "@/components/SoldOutBadge";
 import type { TurmaData } from "@/lib/turma-datas";
 
 const COOKIE = "vecchio_data_preferida";
@@ -69,17 +70,20 @@ export function MatriculaCheckout({
                   onClick={() => escolher(d.id)}
                   aria-pressed={ativa}
                   className={clsx(
-                    "bg-char rounded-sm border-2 p-5 text-center transition-colors duration-200",
+                    "bg-char relative rounded-sm border-2 px-5 pb-5 pt-6 text-center transition-colors duration-200",
                     ativa ? "border-oro!" : "border-line",
-                    d.lotada ? "cursor-not-allowed opacity-50" : "hover:border-oro!"
+                    d.lotada ? "cursor-not-allowed" : "hover:border-oro!"
                   )}
                 >
-                  <span className="font-body text-paper block text-2xl font-bold">{d.rotulo}</span>
-                  <span className="text-smoke mt-1 block text-sm">das 10h às 14h</span>
-                  <span className={clsx("mt-3 block text-xs", d.lotada ? "text-rosso" : "text-oro")}>
-                    {d.lotada
-                      ? "turma lotada"
-                      : `${d.restantes} ${d.restantes === 1 ? "vaga restante" : "vagas restantes"}`}
+                  {d.lotada && <SoldOutBadge />}
+                  <span className={clsx("block", d.lotada && "opacity-50")}>
+                    <span className="font-body text-paper block text-2xl font-bold">{d.rotulo}</span>
+                    <span className="text-smoke mt-1 block text-sm">das 10h às 14h</span>
+                    <span className={clsx("mt-3 block text-xs", d.lotada ? "text-rosso" : "text-oro")}>
+                      {d.lotada
+                        ? "turma lotada"
+                        : `${d.restantes} ${d.restantes === 1 ? "vaga restante" : "vagas restantes"}`}
+                    </span>
                   </span>
                 </button>
               );
