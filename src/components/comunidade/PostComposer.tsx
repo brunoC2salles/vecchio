@@ -88,7 +88,7 @@ export function PostComposer({ voltarPara, error }: PostComposerProps) {
 
       <div className="mt-3">
         <p className="text-smoke text-xs">Sobre qual tópico você está falando?</p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="mt-2 flex flex-wrap gap-2 md:flex-nowrap md:overflow-x-auto md:pb-1">
           {TOPICOS.map((t) => {
             const ativo = topicosSelecionados.includes(t.valor);
             return (
@@ -96,7 +96,7 @@ export function PostComposer({ voltarPara, error }: PostComposerProps) {
                 key={t.valor}
                 type="button"
                 onClick={() => alternarTopico(t.valor)}
-                className={`rounded-full px-3 py-1 text-xs font-semibold tracking-wide transition-colors ${
+                className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold tracking-wide transition-colors ${
                   ativo ? "bg-rosso text-paper" : "border-rosso text-rosso border"
                 }`}
               >

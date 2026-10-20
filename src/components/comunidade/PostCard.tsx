@@ -1,6 +1,7 @@
 import type { Post } from "./types";
 import { addComment, deletePost, toggleLike } from "./actions";
 import { labelDoTopico } from "./topicos";
+import { Avatar } from "./Avatar";
 
 type PostCardProps = {
   post: Post;
@@ -24,13 +25,16 @@ export function PostCard({ post, currentUserId, isAdmin, voltarPara }: PostCardP
 
   return (
     <div className="border-line bg-char rounded-sm border p-4">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-paper text-sm font-semibold">
-            {post.author?.nome ?? "Aluno"}
-            {post.author?.is_patrocinador && <span className="text-oro ml-2 text-xs">patrocinador</span>}
-          </p>
-          <p className="text-smoke text-xs">{formatarData(post.criado_em)}</p>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <Avatar nome={post.author?.nome} url={post.author?.avatar_url} />
+          <div>
+            <p className="text-paper text-sm font-semibold">
+              {post.author?.nome ?? "Aluno"}
+              {post.author?.is_patrocinador && <span className="text-oro ml-2 text-xs">patrocinador</span>}
+            </p>
+            <p className="text-smoke text-xs">{formatarData(post.criado_em)}</p>
+          </div>
         </div>
         {podeExcluir && (
           <form action={deletePost.bind(null, post.id, voltarPara)}>
@@ -65,16 +69,20 @@ export function PostCard({ post, currentUserId, isAdmin, voltarPara }: PostCardP
           </button>
         </form>
         <span className="text-smoke text-sm">
-          {post.comentarios.length} comentário{post.comentarios.length === 1 ? "" : "s"}
+          {post.comentarios.length} comentário
+          {post.comentarios.length === 1 ? "" : "s"}
         </span>
       </div>
 
       {post.comentarios.length > 0 && (
         <div className="border-line mt-3 space-y-2 border-t pt-3">
           {post.comentarios.map((c) => (
-            <div key={c.id} className="text-sm">
-              <span className="text-paper font-semibold">{c.author?.nome ?? "Aluno"}: </span>
-              <span className="text-smoke">{c.conteudo}</span>
+            <div key={c.id} className="flex items-start gap-2 text-sm">
+              <Avatar nome={c.author?.nome} url={c.author?.avatar_url} tamanho="sm" />
+              <p className="pt-1">
+                <span className="text-paper font-semibold">{c.author?.nome ?? "Aluno"}: </span>
+                <span className="text-smoke">{c.conteudo}</span>
+              </p>
             </div>
           ))}
         </div>

@@ -22,10 +22,10 @@ export default async function FeedPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 md:flex-nowrap md:overflow-x-auto md:pb-1">
         <Link
           href="/dashboard/comunidade/feed"
-          className={`rounded-full px-3 py-1 text-xs font-semibold tracking-wide transition-colors ${
+          className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold tracking-wide transition-colors ${
             !topico ? "bg-rosso text-paper" : "border-rosso text-rosso border"
           }`}
         >
@@ -35,7 +35,7 @@ export default async function FeedPage({
           <Link
             key={t.valor}
             href={`/dashboard/comunidade/feed?topico=${t.valor}`}
-            className={`rounded-full px-3 py-1 text-xs font-semibold tracking-wide transition-colors ${
+            className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold tracking-wide transition-colors ${
               topico === t.valor ? "bg-rosso text-paper" : "border-rosso text-rosso border"
             }`}
           >
