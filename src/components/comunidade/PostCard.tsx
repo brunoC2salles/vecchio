@@ -1,7 +1,10 @@
+import { Suspense } from "react";
 import type { Post } from "./types";
 import { addComment, deletePost, toggleLike } from "./actions";
 import { labelDoTopico } from "./topicos";
 import { Avatar } from "./Avatar";
+import { TextoComLinks, primeiroLink } from "./links";
+import { LinkPreviewCard } from "./LinkPreviewCard";
 
 type PostCardProps = {
   post: Post;
@@ -22,6 +25,7 @@ function formatarData(iso: string) {
 export function PostCard({ post, currentUserId, isAdmin, voltarPara }: PostCardProps) {
   const curtiu = post.curtidas.some((c) => c.author_id === currentUserId);
   const podeExcluir = post.author?.id === currentUserId || isAdmin;
+  const linkDaPrevia = primeiroLink(post.conteudo);
 
   return (
     <div className="border-line bg-char rounded-sm border p-4">
@@ -55,7 +59,15 @@ export function PostCard({ post, currentUserId, isAdmin, voltarPara }: PostCardP
         </div>
       )}
 
-      <p className="text-paper mt-3 whitespace-pre-wrap text-sm leading-relaxed">{post.conteudo}</p>
+      <p className="text-paper mt-3 whitespace-pre-wrap text-sm leading-relaxed">
+        <TextoComLinks texto={post.conteudo} />
+      </p>
+
+      {linkDaPrevia && (
+        <Suspense fallback={null}>
+          <LinkPreviewCard url={linkDaPrevia} />
+        </Suspense>
+      )}
 
       {post.midia_url && (
         // eslint-disable-next-line @next/next/no-img-element
