@@ -61,6 +61,80 @@ export function recuperarSenhaEmail(params: { nome: string; resetUrl: string }) 
   return { subject: "Redefinir sua senha — Vecchio School", html };
 }
 
+const WRAPPER_END_INTERNO = `
+    <p style="color:#b8afa1;font-size:12px;margin-top:32px;">
+      Aviso automático da comunidade Vecchio School.
+    </p>
+  </div>
+</div>
+`;
+
+function escaparHtml(texto: string) {
+  return texto
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function previewTexto(texto: string, limite = 280) {
+  const limpo = texto.trim();
+  if (limpo.length <= limite) return limpo;
+  return limpo.slice(0, limite).trimEnd() + "...";
+}
+
+function blocoPreview(texto: string) {
+  return `<div style="background:#0d0b0a;border-left:3px solid #e5b34d;border-radius:2px;padding:14px 16px;margin:16px 0;">
+      <p style="color:#f6f1e6;font-size:15px;line-height:1.6;margin:0;white-space:pre-wrap;">${escaparHtml(previewTexto(texto))}</p>
+    </div>`;
+}
+
+function linhaTopicos(topicos: string[]) {
+  if (topicos.length === 0) return "";
+  const rotulo = topicos.length === 1 ? "Tópico" : "Tópicos";
+  return `<p style="color:#b8afa1;font-size:13px;margin:0 0 4px;">${rotulo}: <span style="color:#e5b34d;">${escaparHtml(topicos.join(", "))}</span></p>`;
+}
+
+export function novoPostEmail(params: {
+  autorNome: string;
+  topicos: string[];
+  conteudo: string;
+  url: string;
+}) {
+  const { autorNome, topicos, conteudo, url } = params;
+  const html = `${WRAPPER_START}
+    <h1 style="color:#f6f1e6;font-size:24px;margin:0 0 16px;">Nova publicação no feed</h1>
+    <p style="color:#f6f1e6;font-size:15px;margin:0 0 4px;"><strong>${escaparHtml(autorNome)}</strong> publicou:</p>
+    ${linhaTopicos(topicos)}
+    ${blocoPreview(conteudo)}
+    ${botao(url, "Ver post")}
+  ${WRAPPER_END_INTERNO}`;
+
+  return { subject: `Nova publicação de ${autorNome} no feed`, html };
+}
+
+export function novoComentarioEmail(params: {
+  autorNome: string;
+  topicos: string[];
+  comentario: string;
+  postConteudo: string;
+  url: string;
+}) {
+  const { autorNome, topicos, comentario, postConteudo, url } = params;
+  const html = `${WRAPPER_START}
+    <h1 style="color:#f6f1e6;font-size:24px;margin:0 0 16px;">Novo comentário no feed</h1>
+    <p style="color:#f6f1e6;font-size:15px;margin:0 0 4px;"><strong>${escaparHtml(autorNome)}</strong> comentou:</p>
+    ${linhaTopicos(topicos)}
+    ${blocoPreview(comentario)}
+    <p style="color:#b8afa1;font-size:13px;margin:0 0 4px;">Na publicação:</p>
+    <p style="color:#b8afa1;font-size:13px;line-height:1.5;margin:0;white-space:pre-wrap;">${escaparHtml(previewTexto(postConteudo, 140))}</p>
+    ${botao(url, "Ver post")}
+  ${WRAPPER_END_INTERNO}`;
+
+  return { subject: `Novo comentário de ${autorNome} no feed`, html };
+}
+
 export function novoLinkAcessoEmail(params: { nome: string; url: string }) {
   const { nome, url } = params;
   const html = `${WRAPPER_START}
