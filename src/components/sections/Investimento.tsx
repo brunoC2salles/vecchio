@@ -48,7 +48,7 @@ export async function Investimento() {
           <h2 className="font-display self-start text-4xl text-paper md:text-5xl">Investimento</h2>
           {/* Margem à direita para não encostar no quadriculado do canto */}
           <span className="bg-rosso text-paper font-body mr-8 shrink-0 rounded-sm px-3 py-1.5 text-sm font-bold tracking-wide md:mr-4 md:mt-3">
-            10 vagas por turma
+            Vagas limitadas
           </span>
         </div>
 
