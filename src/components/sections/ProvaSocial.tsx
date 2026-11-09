@@ -15,6 +15,11 @@ const formados = [
   },
 ];
 
+const turmas = [
+  { legenda: "Turma 24 e 25 de outubro", foto: "/img/prova-social/turma-out-2026.jpg" },
+  { legenda: "Turma 7 e 8 de novembro", foto: "/img/prova-social/turma-nov-2026.jpg" },
+];
+
 export function ProvaSocial() {
   return (
     <section id="depoimentos" className="px-6 py-4 md:px-12">
@@ -22,6 +27,23 @@ export function ProvaSocial() {
         <h2 className="font-display text-4xl text-paper md:text-6xl">Quem já aprendeu com o&nbsp;Vecchio</h2>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {turmas.map((t) => (
+            <figure key={t.foto} className="border-line overflow-hidden rounded-sm border">
+              <div className="bg-char relative aspect-[4/3] w-full">
+                <Image
+                  src={t.foto}
+                  alt={`Alunos da ${t.legenda.toLowerCase()} da Vecchio School`}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="font-display text-paper p-4 text-lg">{t.legenda}</figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
           {formados.map((f) => (
             <div key={f.nome} className="border-line relative overflow-hidden rounded-sm border">
               <div className="bg-char relative aspect-[4/3] w-full">
