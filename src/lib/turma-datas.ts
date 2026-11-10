@@ -45,6 +45,13 @@ export async function listarDatasTurma(turmaId: string): Promise<TurmaData[]> {
   });
 }
 
+// Data para matrícula automática: só existe quando há exatamente uma data com vaga.
+// Com duas ou mais abertas, o aluno escolhe; com nenhuma, o admin resolve.
+export async function dataAutomaticaTurma(turmaId: string): Promise<string | null> {
+  const abertas = (await listarDatasTurma(turmaId)).filter((d) => !d.lotada);
+  return abertas.length === 1 ? abertas[0].id : null;
+}
+
 export type MatriculaPendente = {
   matriculaId: string;
   turmaId: string;
@@ -65,6 +72,16 @@ export async function buscarMatriculaPendente(profileId: string): Promise<Matric
   for (const m of matriculas ?? []) {
     if (!m.turma_id) continue;
     const datas = await listarDatasTurma(m.turma_id);
+    const abertas = datas.filter((d) => !d.lotada);
+    // Uma única data com vaga: grava direto, sem pedir escolha ao aluno.
+    if (abertas.length === 1) {
+      await admin
+        .from("matriculas")
+        .update({ turma_data_id: abertas[0].id })
+        .eq("id", m.id)
+        .is("turma_data_id", null);
+      continue;
+    }
     // Se todas as datas lotaram, não há o que o aluno escolher: o admin resolve manualmente.
     if (datas.some((d) => !d.lotada)) {
       return { matriculaId: m.id, turmaId: m.turma_id, datas };

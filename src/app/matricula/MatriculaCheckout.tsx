@@ -24,7 +24,11 @@ export function MatriculaCheckout({
   linkCartao: string | null;
   preSelecionada: string | null;
 }) {
-  const inicial = datas.find((d) => d.id === preSelecionada && !d.lotada)?.id ?? null;
+  // Com uma única data aberta, ela já vem selecionada (é para onde a matrícula vai).
+  const abertas = datas.filter((d) => !d.lotada);
+  const inicial =
+    datas.find((d) => d.id === preSelecionada && !d.lotada)?.id ??
+    (abertas.length === 1 ? abertas[0].id : null);
   const [escolhida, setEscolhida] = useState<string | null>(inicial);
 
   const temDatas = datas.length > 0;
@@ -60,7 +64,7 @@ export function MatriculaCheckout({
         <div className="mt-10">
           <p className="font-display text-paper text-center text-xl">1. Escolha a data</p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
-            {datas.map((d) => {
+            {datas.map((d, i) => {
               const ativa = escolhida === d.id;
               return (
                 <button
@@ -71,6 +75,7 @@ export function MatriculaCheckout({
                   aria-pressed={ativa}
                   className={clsx(
                     "bg-char relative rounded-sm border-2 px-5 pb-5 pt-6 text-center transition-colors duration-200",
+                    datas.length % 2 === 1 && i === datas.length - 1 && "md:col-span-2",
                     ativa ? "border-oro!" : "border-line",
                     d.lotada ? "cursor-not-allowed" : "hover:border-oro!"
                   )}

@@ -5,6 +5,7 @@ import { sendEmail } from "@/lib/email";
 import { compraConfirmadaEmail } from "@/lib/email-templates";
 import { gerarCodigoAcesso } from "@/lib/codigo-acesso";
 import { linkConfirmacaoAuth } from "@/lib/auth-links";
+import { dataAutomaticaTurma } from "@/lib/turma-datas";
 
 // PAYMENT_CONFIRMED cobre cartão (aprovação imediata) e boleto.
 // PAYMENT_RECEIVED cobre Pix e dinheiro (não existe CONFIRMED nesse fluxo).
@@ -127,6 +128,7 @@ export async function POST(request: NextRequest) {
       turma_id: turma.id,
       status: "pago",
       codigo_acesso_presencial: codigo,
+      turma_data_id: await dataAutomaticaTurma(turma.id),
     });
 
     const { subject, html } = compraConfirmadaEmail({
@@ -153,6 +155,7 @@ export async function POST(request: NextRequest) {
         turma_id: turma.id,
         status: "pago",
         codigo_acesso_presencial: gerarCodigoAcesso(),
+        turma_data_id: await dataAutomaticaTurma(turma.id),
       });
     } else if (matriculaExistente.status !== "pago") {
       await admin.from("matriculas").update({ status: "pago" }).eq("id", matriculaExistente.id);

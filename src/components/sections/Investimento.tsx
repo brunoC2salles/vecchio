@@ -67,13 +67,19 @@ export async function Investimento() {
           <p className="text-rosso font-display text-sm">Turmas</p>
           {datas.length === 0 ? (
             <p className="text-paper mt-2 text-lg leading-snug">
-              24 e 25 de outubro ou 7 e 8 de novembro, das 10h às 14h. Você escolhe a data na inscrição.
+              12 e 13 de dezembro, das 10h às 14h.
             </p>
           ) : (
             <>
               <div className="mt-6 grid gap-6 md:grid-cols-2">
-                {datas.map((d) => (
-                  <div key={d.id} className="border-line relative rounded-sm border px-5 pb-5 pt-6 text-center">
+                {datas.map((d, i) => (
+                  <div
+                    key={d.id}
+                    className={clsx(
+                      "border-line relative rounded-sm border px-5 pb-5 pt-6 text-center",
+                      datas.length % 2 === 1 && i === datas.length - 1 && "md:col-span-2"
+                    )}
+                  >
                     {d.lotada && <SoldOutBadge />}
                     <div className={clsx(d.lotada && "opacity-50")}>
                       <span className="font-body text-paper block text-2xl font-bold">{d.rotulo}</span>
