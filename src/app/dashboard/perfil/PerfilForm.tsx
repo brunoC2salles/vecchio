@@ -49,7 +49,7 @@ export function PerfilForm({ nome, telefone, bio, avatarAtual }: PerfilFormProps
   }
 
   return (
-    <form action={updatePerfil} className="border-line bg-char max-w-md rounded-sm border p-6">
+    <form action={updatePerfil} className="border-line bg-char max-w-md rounded-sm border p-4 md:p-6">
       {erroUpload && <p className="border-rosso text-rosso mb-4 rounded-sm border px-4 py-3 text-sm">{erroUpload}</p>}
 
       <input type="hidden" name="avatar_url" value={avatarUrl ?? ""} />

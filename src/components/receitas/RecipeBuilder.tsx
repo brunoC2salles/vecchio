@@ -149,7 +149,7 @@ export function RecipeBuilder({
                 placeholder="Buscar insumo..."
                 className="border-line bg-char text-paper mt-2 w-full rounded-sm border px-3 py-2 text-sm outline-none focus:border-rosso"
               />
-              <div className="mt-3 max-h-96 space-y-2 overflow-y-auto pr-1">
+              <div className="mt-3 max-h-64 space-y-2 overflow-y-auto pr-1 md:max-h-96">
                 {insumosFiltrados.map((insumo) => (
                   <InsumoChip key={insumo.id} insumo={insumo} onAdd={() => addItem(insumo.id)} />
                 ))}
@@ -192,7 +192,7 @@ export function RecipeBuilder({
             >
               {items.length === 0 && (
                 <p className="text-smoke py-8 text-center text-sm">
-                  {readOnly ? "Nenhum ingrediente nesta receita." : "Arraste insumos aqui, ou toque neles ao lado."}
+                  {readOnly ? "Nenhum ingrediente nesta receita." : "Arraste insumos aqui, ou toque neles na lista."}
                 </p>
               )}
               <div className="space-y-2">
@@ -200,7 +200,7 @@ export function RecipeBuilder({
                   const info = itemInfo(item);
                   return (
                     <div key={item.insumo_id} className="border-line flex items-center gap-2 rounded-sm border p-2">
-                      <span className="text-paper flex-1 text-sm">{info.nome}</span>
+                      <span className="text-paper min-w-0 flex-1 text-sm break-words">{info.nome}</span>
                       <input
                         type="number"
                         step="0.001"
@@ -208,14 +208,14 @@ export function RecipeBuilder({
                         value={item.quantidade}
                         disabled={readOnly}
                         onChange={(e) => updateQuantidade(item.insumo_id, Number(e.target.value))}
-                        className="border-line bg-ink text-paper w-24 rounded-sm border px-2 py-1 text-sm outline-none focus:border-rosso disabled:opacity-70"
+                        className="border-line bg-ink text-paper w-20 shrink-0 rounded-sm border px-2 py-1 text-sm sm:w-24 outline-none focus:border-rosso disabled:opacity-70"
                       />
                       <span className="text-smoke w-10 text-xs">{info.unidade}</span>
                       {!readOnly && (
                         <button
                           type="button"
                           onClick={() => removeItem(item.insumo_id)}
-                          className="text-rosso text-xs underline underline-offset-2"
+                          className="text-rosso shrink-0 py-1 text-xs underline underline-offset-2"
                         >
                           remover
                         </button>
@@ -235,7 +235,7 @@ export function RecipeBuilder({
                     Preço sugerido (CMV alvo {(cmvConfig.cmv_alvo * 100).toFixed(0)}%): R$ {sugerido.toFixed(2)}
                   </p>
                 </div>
-                <div className="w-40">
+                <div className="w-full sm:w-40">
                   <label className="text-smoke text-xs">Preço de venda (opcional)</label>
                   <input
                     name="preco_venda_sugerido"
@@ -258,14 +258,14 @@ export function RecipeBuilder({
             </div>
 
             {!readOnly && (
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <label className="text-smoke flex items-center gap-2 text-sm">
                   <input type="checkbox" name="publica" defaultChecked={initial?.publica ?? true} />
                   Compartilhar com a comunidade
                 </label>
                 <button
                   type="submit"
-                  className="font-display bg-rosso text-paper rounded-sm px-6 py-2.5 text-base tracking-wide"
+                  className="font-display bg-rosso text-paper w-full rounded-sm px-6 py-3 text-base tracking-wide sm:w-auto sm:py-2.5"
                 >
                   Salvar receita
                 </button>

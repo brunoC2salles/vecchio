@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { TabNav } from "@/components/TabNav";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -23,15 +23,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div>
-      <h1 className="font-display text-paper text-4xl">Administração</h1>
-      <nav className="border-line mt-6 flex flex-wrap gap-6 border-b pb-3">
-        {tabs.map((t) => (
-          <Link key={t.href} href={t.href} className="text-smoke hover:text-paper text-sm">
-            {t.label}
-          </Link>
-        ))}
-      </nav>
-      <div className="mt-8">{children}</div>
+      <h1 className="font-display text-paper text-3xl md:text-4xl">Administração</h1>
+      <TabNav tabs={tabs} className="mt-5 md:mt-6" />
+      <div className="mt-6 md:mt-8">{children}</div>
     </div>
   );
 }

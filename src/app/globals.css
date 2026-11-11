@@ -51,6 +51,16 @@ body {
   }
 }
 
+/* iOS dá zoom automático ao focar campo com fonte menor que 16px, o que deixa a página
+   "larga" e obriga a arrastar para o lado. No celular, campos sempre com 16px. */
+@media (max-width: 767px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 /* Nunca deixar uma palavra sozinha na última linha de um título ou parágrafo */
 h1, h2, h3 {
   text-wrap: balance;

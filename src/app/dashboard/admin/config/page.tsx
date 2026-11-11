@@ -22,7 +22,7 @@ export default async function ConfigPage({
       {error && <p className="border-rosso text-rosso mt-4 rounded-sm border px-4 py-3 text-sm">{error}</p>}
       {ok && <p className="border-line text-paper mt-4 rounded-sm border px-4 py-3 text-sm">Configuração salva.</p>}
 
-      <form action={updateCmvConfig} className="border-line bg-char mt-6 space-y-4 rounded-sm border p-6">
+      <form action={updateCmvConfig} className="border-line bg-char mt-6 space-y-4 rounded-sm border p-4 md:p-6">
         <div>
           <label className="text-smoke text-sm">CMV alvo</label>
           <input

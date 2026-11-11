@@ -49,11 +49,11 @@ export default async function ReceitaPage({
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="font-display text-paper text-4xl">{isOwner ? "Editar receita" : receita.nome}</h1>
+      <div className="flex items-start justify-between gap-4">
+        <h1 className="font-display text-paper text-3xl md:text-4xl">{isOwner ? "Editar receita" : receita.nome}</h1>
         {isOwner && (
           <form action={deleteReceita.bind(null, id)}>
-            <button type="submit" className="text-rosso text-xs underline underline-offset-2">
+            <button type="submit" className="text-rosso shrink-0 pt-2 text-xs whitespace-nowrap underline underline-offset-2">
               excluir receita
             </button>
           </form>

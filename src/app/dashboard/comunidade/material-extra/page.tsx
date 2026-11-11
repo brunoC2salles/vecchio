@@ -44,16 +44,16 @@ export default async function MaterialExtraPage({
         {materiaisComLink.map((m) => (
           <div
             key={m.id}
-            className="border-line bg-char flex items-center justify-between gap-4 rounded-sm border p-4"
+            className="border-line bg-char flex flex-col gap-3 rounded-sm border p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
           >
-            <div>
+            <div className="min-w-0">
               <p className="text-paper text-sm font-semibold">{m.titulo}</p>
               {m.descricao && <p className="text-smoke mt-1 text-xs">{m.descricao}</p>}
               <p className="text-smoke mt-1 text-xs">
-                {m.arquivo_nome} · {formatarTamanho(m.tamanho_bytes)}
+                <span className="break-all">{m.arquivo_nome}</span> · {formatarTamanho(m.tamanho_bytes)}
               </p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex shrink-0 items-center gap-5">
               {m.url ? (
                 <a
                   href={m.url}
@@ -106,7 +106,7 @@ export default async function MaterialExtraPage({
             placeholder="Descrição (opcional)"
             className="border-line bg-ink text-paper w-full rounded-sm border px-3 py-2 text-sm outline-none focus:border-rosso"
           />
-          <input name="arquivo" type="file" accept="application/pdf" required className="text-paper text-sm" />
+          <input name="arquivo" type="file" accept="application/pdf" required className="text-paper w-full text-sm" />
           <button type="submit" className="font-display bg-rosso text-paper rounded-sm px-5 py-2 text-sm tracking-wide">
             Enviar material
           </button>

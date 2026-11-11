@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Sidebar } from "@/components/Sidebar";
+import { MobileNav } from "@/components/MobileNav";
 import { buscarMatriculaPendente } from "@/lib/turma-datas";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -33,7 +34,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         isAdmin={profile?.role === "admin"}
       />
 
-      <main className="flex-1 px-8 py-10 md:px-12">{children}</main>
+      <main className="min-w-0 flex-1 px-4 pt-6 pb-28 md:px-12 md:py-10">{children}</main>
+
+      <MobileNav isAdmin={profile?.role === "admin"} />
     </div>
   );
 }

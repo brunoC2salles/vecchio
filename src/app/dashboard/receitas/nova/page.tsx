@@ -31,7 +31,7 @@ export default async function NovaReceitaPage({
 
   return (
     <div>
-      <h1 className="font-display text-paper text-4xl">Nova receita</h1>
+      <h1 className="font-display text-paper text-3xl md:text-4xl">Nova receita</h1>
       <div className="mt-6">
         <RecipeBuilder action={createReceita} insumos={insumos ?? []} cmvConfig={cfg} error={error} />
       </div>

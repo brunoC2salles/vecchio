@@ -23,11 +23,11 @@ export default async function ReceitasPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="font-display text-paper text-4xl">Receitas</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="font-display text-paper text-3xl md:text-4xl">Receitas</h1>
         <Link
           href="/dashboard/receitas/nova"
-          className="font-display bg-rosso text-paper rounded-sm px-5 py-2 text-sm tracking-wide"
+          className="font-display bg-rosso text-paper shrink-0 rounded-sm px-4 py-2 text-sm tracking-wide md:px-5"
         >
           Nova receita
         </Link>

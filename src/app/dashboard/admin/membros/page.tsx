@@ -34,7 +34,7 @@ export default async function MembrosPage({
                 : `${semSenha.length} alunos ainda não criaram a senha.`}
           </p>
           {semSenha.length > 0 && (
-            <p className="text-smoke mt-1 text-xs">{semSenha.map((p) => p.nome || p.email).join(", ")}</p>
+            <p className="text-smoke mt-1 text-xs break-words">{semSenha.map((p) => p.nome || p.email).join(", ")}</p>
           )}
         </div>
         {semSenha.length > 0 && (
@@ -55,7 +55,48 @@ export default async function MembrosPage({
         {(membros ?? []).length === 1 ? "" : "s"}.
       </p>
 
-      <div className="border-line mt-4 overflow-x-auto rounded-sm border">
+      {/* Celular: um card por membro, com o próprio form (fora de tabela, então pode ter <form> normal). */}
+      <div className="mt-4 space-y-3 md:hidden">
+        {(membros ?? []).map((m) => (
+          <div key={m.id} className="border-line bg-char rounded-sm border p-4">
+            <p className="text-paper text-sm">{m.nome}</p>
+            <p className="text-smoke text-xs break-all">{m.email}</p>
+            <form action={updateMembro.bind(null, m.id)} className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-3">
+              <select
+                name="role"
+                defaultValue={m.role}
+                className="border-line bg-ink text-paper rounded-sm border px-2 py-2 text-xs outline-none focus:border-rosso"
+              >
+                <option value="aluno">Aluno</option>
+                <option value="admin">Admin</option>
+              </select>
+              <label className="text-smoke flex items-center gap-2 text-xs">
+                <input type="checkbox" name="is_patrocinador" defaultChecked={m.is_patrocinador} className="h-4 w-4" />
+                Patrocinador
+              </label>
+              <button type="submit" className="text-oro ml-auto py-2 text-xs underline underline-offset-2">
+                salvar
+              </button>
+            </form>
+            <form action={excluirMembro.bind(null, m.id)} className="border-line mt-2 border-t pt-2 text-right">
+              <ConfirmButton
+                type="submit"
+                confirmMessage={`Excluir ${m.nome} definitivamente? Isso apaga a conta, matrículas, posts e comentários. Não tem volta.`}
+                className="text-rosso py-1 text-xs underline underline-offset-2"
+              >
+                excluir membro
+              </ConfirmButton>
+            </form>
+          </div>
+        ))}
+        {(membros ?? []).length === 0 && (
+          <p className="text-smoke border-line rounded-sm border px-4 py-6 text-center text-sm">
+            Nenhum membro cadastrado ainda.
+          </p>
+        )}
+      </div>
+
+      <div className="border-line mt-4 hidden overflow-x-auto rounded-sm border md:block">
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="border-line text-smoke border-b">

@@ -23,7 +23,7 @@ export default async function NovoAlunoPage({
         </p>
       )}
 
-      <form action={convidarAluno} className="border-line bg-char mt-6 space-y-4 rounded-sm border p-6">
+      <form action={convidarAluno} className="border-line bg-char mt-6 space-y-4 rounded-sm border p-4 md:p-6">
         <div>
           <label className="text-smoke text-sm">Nome</label>
           <input

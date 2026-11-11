@@ -37,13 +37,13 @@ export default async function EventosPage({
       <div className="space-y-3">
         {(eventos ?? []).map((ev) => (
           <div key={ev.id} className="border-line bg-char rounded-sm border p-4">
-            <div className="flex items-start justify-between">
-              <div>
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
                 <p className="text-paper text-sm font-semibold">{ev.titulo}</p>
                 <p className="text-smoke mt-1 text-xs">
                   {formatarData(ev.data_evento)} · {ev.tipo === "online" ? "Online" : "Presencial"}
                 </p>
-                {ev.local_ou_link && <p className="text-smoke mt-1 text-xs">{ev.local_ou_link}</p>}
+                {ev.local_ou_link && <p className="text-smoke mt-1 text-xs break-words">{ev.local_ou_link}</p>}
               </div>
               {isAdmin && (
                 <form action={deleteEvento.bind(null, ev.id)}>
@@ -71,7 +71,7 @@ export default async function EventosPage({
             placeholder="Título"
             className="border-line bg-ink text-paper w-full rounded-sm border px-3 py-2 text-sm outline-none focus:border-rosso"
           />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             <select
               name="tipo"
               className="border-line bg-ink text-paper w-full rounded-sm border px-3 py-2 text-sm outline-none focus:border-rosso"

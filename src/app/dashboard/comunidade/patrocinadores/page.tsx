@@ -27,9 +27,9 @@ export default async function PatrocinadoresPage({
     <div className="space-y-6">
       {error && <p className="border-rosso text-rosso rounded-sm border px-4 py-3 text-sm">{error}</p>}
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
         {(patrocinadores ?? []).map((p) => (
-          <div key={p.id} className="border-line bg-char flex items-center justify-between rounded-sm border p-4">
+          <div key={p.id} className="border-line bg-char flex items-center justify-between gap-4 rounded-sm border p-4">
             <a
               href={p.link ?? "#"}
               target="_blank"
@@ -48,7 +48,7 @@ export default async function PatrocinadoresPage({
           </div>
         ))}
         {(patrocinadores ?? []).length === 0 && (
-          <p className="text-smoke border-line col-span-2 rounded-sm border px-4 py-6 text-center text-sm">
+          <p className="text-smoke border-line rounded-sm border sm:col-span-2 px-4 py-6 text-center text-sm">
             Nenhum patrocinador cadastrado ainda.
           </p>
         )}

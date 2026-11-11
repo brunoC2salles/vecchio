@@ -34,11 +34,14 @@ export function ItemsEditor({ insumos, initialItems, fieldName }: ItemsEditorPro
         {items.map((item, i) => {
           const insumo = insumos.find((ins) => ins.id === item.insumo_id);
           return (
-            <div key={i} className="flex items-center gap-3">
+            <div
+              key={i}
+              className="border-line flex flex-wrap items-center gap-x-3 gap-y-2 border-b pb-3 last:border-0 last:pb-0 sm:flex-nowrap sm:border-0 sm:pb-0"
+            >
               <select
                 value={item.insumo_id}
                 onChange={(e) => updateItem(i, { insumo_id: e.target.value })}
-                className="border-line bg-ink text-paper flex-1 rounded-sm border px-3 py-2 text-sm outline-none focus:border-rosso"
+                className="border-line bg-ink text-paper w-full min-w-0 rounded-sm border px-3 py-2 text-sm outline-none focus:border-rosso sm:w-auto sm:flex-1"
               >
                 {insumos.map((ins) => (
                   <option key={ins.id} value={ins.id}>
@@ -58,7 +61,7 @@ export function ItemsEditor({ insumos, initialItems, fieldName }: ItemsEditorPro
               <button
                 type="button"
                 onClick={() => removeItem(i)}
-                className="text-rosso text-xs underline underline-offset-2"
+                className="text-rosso ml-auto py-2 text-xs underline underline-offset-2 sm:ml-0"
               >
                 remover
               </button>

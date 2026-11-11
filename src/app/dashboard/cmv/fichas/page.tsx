@@ -37,14 +37,14 @@ export default async function FichasPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-smoke max-w-md text-sm">
           CMV real = custo dos insumos ÷ preço de venda. Margem de contribuição desconta também
           embalagem, imposto e, no iFood, a comissão do canal.
         </p>
         <Link
           href="/dashboard/cmv/fichas/novo"
-          className="font-display bg-rosso text-paper flex-shrink-0 rounded-sm px-5 py-2 text-sm tracking-wide"
+          className="font-display bg-rosso text-paper flex-shrink-0 rounded-sm px-5 py-2.5 text-center text-sm tracking-wide sm:py-2"
         >
           Nova ficha
         </Link>
@@ -77,16 +77,16 @@ export default async function FichasPage() {
           const sugerido = precoSugerido(Number(f.custo_total), cfg.cmv_alvo);
 
           return (
-            <div key={f.id} className="border-line bg-char rounded-sm border p-5">
-              <div className="flex items-start justify-between">
-                <div>
+            <div key={f.id} className="border-line bg-char rounded-sm border p-4 md:p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
                   <p className="font-display text-paper text-xl">{f.nome}</p>
                   <p className="text-smoke mt-1 text-xs">
                     Custo dos insumos: R$ {Number(f.custo_total).toFixed(2)} · Preço sugerido (CMV alvo{" "}
                     {(cfg.cmv_alvo * 100).toFixed(0)}%): R$ {sugerido.toFixed(2)}
                   </p>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex shrink-0 gap-4">
                   <Link href={`/dashboard/cmv/fichas/${f.id}`} className="text-smoke hover:text-paper text-xs underline underline-offset-2">
                     editar
                   </Link>

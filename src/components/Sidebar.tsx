@@ -12,7 +12,7 @@ type SidebarProps = {
   isAdmin: boolean;
 };
 
-function IconCMV(props: React.SVGProps<SVGSVGElement>) {
+export function IconCMV(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <rect x="4" y="3" width="16" height="18" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
@@ -20,7 +20,7 @@ function IconCMV(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-function IconComunidade(props: React.SVGProps<SVGSVGElement>) {
+export function IconComunidade(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <circle cx="9" cy="9" r="3" stroke="currentColor" strokeWidth="1.6" />
@@ -30,7 +30,7 @@ function IconComunidade(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-function IconReceitas(props: React.SVGProps<SVGSVGElement>) {
+export function IconReceitas(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <path d="M6 3v18M6 3c3 0 3 3 3 5s0 5-3 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -39,7 +39,7 @@ function IconReceitas(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-function IconPerfil(props: React.SVGProps<SVGSVGElement>) {
+export function IconPerfil(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <circle cx="12" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.6" />
@@ -47,7 +47,7 @@ function IconPerfil(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-function IconAdmin(props: React.SVGProps<SVGSVGElement>) {
+export function IconAdmin(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <path d="M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6l7-3z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
@@ -55,7 +55,7 @@ function IconAdmin(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-function IconSair(props: React.SVGProps<SVGSVGElement>) {
+export function IconSair(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
       <path d="M9 4H6a1.5 1.5 0 0 0-1.5 1.5v13A1.5 1.5 0 0 0 6 20h3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -124,7 +124,7 @@ export function Sidebar({ nome, role, isPatrocinador, isAdmin }: SidebarProps) {
 
   return (
     <aside
-      className={`sticky top-0 flex h-screen flex-shrink-0 flex-col bg-transparent px-4 py-8 transition-all duration-200 ${
+      className={`sticky top-0 hidden h-screen md:flex flex-shrink-0 flex-col bg-transparent px-4 py-8 transition-all duration-200 ${
         aberto ? "w-64" : "w-20"
       }`}
     >

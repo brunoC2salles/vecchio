@@ -26,14 +26,14 @@ export default async function AulasPage({
 
       {(salas ?? []).map((sala) => (
         <div key={sala.id}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="font-display text-paper text-2xl">{sala.nome}</h2>
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <h2 className="font-display text-paper text-xl md:text-2xl">{sala.nome}</h2>
               {sala.descricao && <p className="text-smoke mt-1 text-sm">{sala.descricao}</p>}
             </div>
             {isAdmin && (
               <form action={deleteSala.bind(null, sala.id)}>
-                <button type="submit" className="text-rosso text-xs underline underline-offset-2">
+                <button type="submit" className="text-rosso shrink-0 text-xs whitespace-nowrap underline underline-offset-2">
                   excluir sala
                 </button>
               </form>
@@ -47,7 +47,7 @@ export default async function AulasPage({
                 const embedUrl = toEmbedUrl(aula.url_video);
                 return (
                   <div key={aula.id} className="border-line bg-char rounded-sm border p-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between gap-4">
                       <p className="text-paper text-sm font-semibold">{aula.titulo}</p>
                       {isAdmin && (
                         <form action={deleteAula.bind(null, aula.id)}>
