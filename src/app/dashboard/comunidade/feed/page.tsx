@@ -21,8 +21,10 @@ export default async function FeedPage({
   const voltarPara = topico ? `/dashboard/comunidade/feed?topico=${topico}` : "/dashboard/comunidade/feed";
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap gap-2 md:flex-nowrap md:overflow-x-auto md:pb-1">
+    <div className="space-y-5 md:space-y-6">
+      {/* Uma linha só, deslizável com o dedo. No celular encosta nas bordas da tela e esmaece
+          à direita para indicar que há mais tópicos. */}
+      <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 [mask-image:linear-gradient(to_right,black_calc(100%_-_2rem),transparent)] md:mx-0 md:px-0 md:pb-1 md:[mask-image:none]">
         <Link
           href="/dashboard/comunidade/feed"
           className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold tracking-wide transition-colors ${

@@ -61,6 +61,14 @@ body {
   }
 }
 
+/* Linhas deslizáveis (ex: filtro de tópicos) sem barra de rolagem visível */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Nunca deixar uma palavra sozinha na última linha de um título ou parágrafo */
 h1, h2, h3 {
   text-wrap: balance;

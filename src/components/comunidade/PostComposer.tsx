@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { createClient } from "@/lib/supabase/client";
 import { createPost } from "./actions";
 import { TOPICOS } from "./topicos";
@@ -16,6 +17,15 @@ export function PostComposer({ voltarPara, error }: PostComposerProps) {
   const [erroUpload, setErroUpload] = useState<string | null>(null);
   const [topicosSelecionados, setTopicosSelecionados] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
+  const textoRef = useRef<HTMLTextAreaElement>(null);
+  // No celular a caixa começa recolhida em uma linha; abre ao tocar. No desktop fica sempre aberta.
+  const [aberto, setAberto] = useState(Boolean(error));
+
+  function abrir() {
+    // flushSync garante que o campo já está visível antes do focus, para o iOS abrir o teclado.
+    flushSync(() => setAberto(true));
+    textoRef.current?.focus();
+  }
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -61,9 +71,21 @@ export function PostComposer({ voltarPara, error }: PostComposerProps) {
         formRef.current?.reset();
         setMidiaUrl(null);
         setTopicosSelecionados([]);
+        setAberto(false);
       }}
       className="border-line bg-char rounded-sm border p-4"
     >
+      {!aberto && (
+        <button
+          type="button"
+          onClick={abrir}
+          className="border-line bg-ink text-smoke w-full rounded-sm border px-3 py-2.5 text-left md:hidden"
+        >
+          Compartilhe algo com a comunidade...
+        </button>
+      )}
+
+      <div className={aberto ? "" : "hidden md:block"}>
       {error && <p className="border-rosso text-rosso mb-3 rounded-sm border px-4 py-3 text-sm">{error}</p>}
       {erroUpload && <p className="border-rosso text-rosso mb-3 rounded-sm border px-4 py-3 text-sm">{erroUpload}</p>}
 
@@ -74,6 +96,7 @@ export function PostComposer({ voltarPara, error }: PostComposerProps) {
       ))}
 
       <textarea
+        ref={textoRef}
         name="conteudo"
         required
         rows={3}
@@ -113,13 +136,23 @@ export function PostComposer({ voltarPara, error }: PostComposerProps) {
           <input type="file" accept="image/*" onChange={handleFile} className="hidden" disabled={enviandoImagem} />
         </label>
 
-        <button
-          type="submit"
-          disabled={enviandoImagem || topicosSelecionados.length === 0}
-          className="font-display bg-rosso text-paper rounded-sm px-5 py-2 text-sm tracking-wide disabled:opacity-50"
-        >
-          Publicar
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => setAberto(false)}
+            className="text-smoke text-sm underline underline-offset-2 md:hidden"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            disabled={enviandoImagem || topicosSelecionados.length === 0}
+            className="font-display bg-rosso text-paper rounded-sm px-5 py-2 text-sm tracking-wide disabled:opacity-50"
+          >
+            Publicar
+          </button>
+        </div>
+      </div>
       </div>
     </form>
   );
