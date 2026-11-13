@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
-import { novoLinkAcessoEmail } from "@/lib/email-templates";
+import { novoLinkAcessoEmail, conviteWhatsappEmail } from "@/lib/email-templates";
 import { linkConfirmacaoAuth } from "@/lib/auth-links";
 
 export async function updateMembro(id: string, formData: FormData) {
@@ -96,6 +96,56 @@ export async function reenviarLinksSemSenha() {
 
   revalidatePath("/dashboard/admin/membros");
   const params = new URLSearchParams({ reenvio: String(enviados) });
+  if (falhas.length) params.set("falhas", falhas.join(", "));
+  redirect("/dashboard/admin/membros?" + params.toString());
+}
+
+// Todos os alunos (não admins), exceto quem só tem matrículas canceladas.
+export async function listarAlunosParaConvite() {
+  const admin = createAdminClient();
+  const { data } = await admin
+    .from("profiles")
+    .select("id, nome, email, matriculas(status)")
+    .neq("role", "admin");
+
+  return (data ?? []).filter((p) => {
+    if (!p.email) return false;
+    const matriculas = (p.matriculas ?? []) as { status: string }[];
+    if (matriculas.length === 0) return true;
+    return matriculas.some((m) => m.status !== "cancelado");
+  });
+}
+
+export async function enviarConviteWhatsapp() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { data: perfil } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+  if (perfil?.role !== "admin") redirect("/dashboard");
+
+  const alunos = await listarAlunosParaConvite();
+  const { subject, html } = conviteWhatsappEmail();
+
+  let enviados = 0;
+  const falhas: string[] = [];
+
+  for (const a of alunos) {
+    try {
+      await sendEmail({ to: a.email, subject, html });
+      enviados++;
+    } catch (e) {
+      console.error("Falha ao enviar convite do WhatsApp para", a.email, e);
+      falhas.push(a.email);
+    }
+
+    // Respeita o limite de envios por segundo do Resend.
+    await new Promise((r) => setTimeout(r, 600));
+  }
+
+  const params = new URLSearchParams({ whatsapp: String(enviados) });
   if (falhas.length) params.set("falhas", falhas.join(", "));
   redirect("/dashboard/admin/membros?" + params.toString());
 }

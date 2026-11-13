@@ -154,3 +154,21 @@ export function novoLinkAcessoEmail(params: { nome: string; url: string }) {
 
   return { subject: "Seu novo link de acesso à Vecchio School", html };
 }
+
+export const WHATSAPP_GRUPO_URL = "https://chat.whatsapp.com/JWqXo5aV34VLXTMQhdma9B";
+
+export function conviteWhatsappEmail() {
+  const html = `${WRAPPER_START}
+    <h1 style="color:#f6f1e6;font-size:26px;margin:0 0 16px;">Bene jovens!</h1>
+    <p style="color:#f6f1e6;font-size:15px;line-height:1.6;">
+      Criamos um grupo no WhatsApp para os alunos da Vecchio School trocarem ideias
+      e receberem os avisos do curso em primeira mão.
+    </p>
+    <p style="color:#f6f1e6;font-size:15px;line-height:1.6;">
+      Toque no botão abaixo para entrar no grupo.
+    </p>
+    ${botao(WHATSAPP_GRUPO_URL, "Entrar no grupo")}
+  ${WRAPPER_END}`;
+
+  return { subject: "Entre no grupo de WhatsApp da Vecchio School", html };
+}

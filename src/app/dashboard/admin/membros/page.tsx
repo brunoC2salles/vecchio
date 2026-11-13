@@ -1,14 +1,22 @@
 import { createClient } from "@/lib/supabase/server";
-import { updateMembro, excluirMembro, listarSemSenha, reenviarLinksSemSenha } from "./actions";
+import {
+  updateMembro,
+  excluirMembro,
+  listarSemSenha,
+  reenviarLinksSemSenha,
+  listarAlunosParaConvite,
+  enviarConviteWhatsapp,
+} from "./actions";
 import { ConfirmButton } from "@/components/ConfirmButton";
 
 export default async function MembrosPage({
   searchParams,
 }: {
-  searchParams: Promise<{ reenvio?: string; falhas?: string }>;
+  searchParams: Promise<{ reenvio?: string; whatsapp?: string; falhas?: string }>;
 }) {
-  const { reenvio, falhas } = await searchParams;
+  const { reenvio, whatsapp, falhas } = await searchParams;
   const semSenha = await listarSemSenha();
+  const alunosConvite = await listarAlunosParaConvite();
   const supabase = await createClient();
   const { data: membros } = await supabase
     .from("profiles")
@@ -23,6 +31,32 @@ export default async function MembrosPage({
           {falhas && <span className="text-rosso block mt-1">Falha no envio para: {falhas}</span>}
         </p>
       )}
+
+      {whatsapp !== undefined && (
+        <p className="border-line text-paper mb-6 rounded-sm border px-4 py-3 text-sm">
+          Convite do WhatsApp enviado para {whatsapp} aluno{whatsapp === "1" ? "" : "s"}.
+          {falhas && <span className="text-rosso block mt-1">Falha no envio para: {falhas}</span>}
+        </p>
+      )}
+
+      <div className="border-line mb-4 flex flex-col gap-4 rounded-sm border px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-paper text-sm">
+          {alunosConvite.length === 1
+            ? "Convite do grupo de WhatsApp: 1 aluno vai receber."
+            : `Convite do grupo de WhatsApp: ${alunosConvite.length} alunos vão receber.`}
+        </p>
+        {alunosConvite.length > 0 && (
+          <form action={enviarConviteWhatsapp}>
+            <ConfirmButton
+              type="submit"
+              confirmMessage={`Enviar o convite do grupo de WhatsApp para ${alunosConvite.length} aluno${alunosConvite.length === 1 ? "" : "s"}?`}
+              className="font-display bg-rosso text-paper w-full rounded-sm px-5 py-2.5 text-base tracking-wide sm:w-auto"
+            >
+              Enviar convite do WhatsApp
+            </ConfirmButton>
+          </form>
+        )}
+      </div>
 
       <div className="border-line mb-8 flex flex-col gap-4 rounded-sm border px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
