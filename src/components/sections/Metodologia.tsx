@@ -1,4 +1,5 @@
 import { CTAButton } from "@/components/CTAButton";
+import { VimeoEmbed } from "@/components/VimeoEmbed";
 
 const modulos = [
   {
@@ -36,6 +37,14 @@ const modulos = [
 const colunaEsquerda = modulos.slice(0, 3);
 const colunaDireita = modulos.slice(3);
 
+// Vídeos verticais (1280 x 2276). A proporção do container é a mesma do vídeo,
+// então o player não mostra bordas pretas.
+const videos = [
+  { id: "1246611521", titulo: "Vídeo 1 do curso Vecchio School" },
+  { id: "1246613406", titulo: "Vídeo 2 do curso Vecchio School" },
+];
+const PROPORCAO_VERTICAL = `${(2276 / 1280) * 100}%`;
+
 function Modulo({ titulo, texto }: { titulo: string; texto: string }) {
   return (
     <div className="flex items-start gap-4">
@@ -65,6 +74,18 @@ export function Metodologia() {
               <Modulo key={m.titulo} {...m} />
             ))}
           </div>
+        </div>
+
+        <div className="mx-auto mt-12 grid max-w-sm gap-6 md:max-w-3xl md:grid-cols-2 md:gap-8">
+          {videos.map((v) => (
+            <VimeoEmbed
+              key={v.id}
+              videoId={v.id}
+              title={v.titulo}
+              aspectRatio={PROPORCAO_VERTICAL}
+              className="border-line overflow-hidden rounded-sm border"
+            />
+          ))}
         </div>
 
         <div className="mt-10 flex justify-center">
